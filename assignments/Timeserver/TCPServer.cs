@@ -9,16 +9,15 @@ TCPListener.Start();
 
 while (true)
 {
-    var TCPClient = TCPListener.AcceptTcpClient();
-    // var buffer = new byte[100];
-    // var responseBuffer = Encoding.ASCII.GetBytes("Type anything to get Date and time!");
-    // TCPClient.GetStream().Write(responseBuffer, 0, responseBuffer.Length);
-    // TCPClient.GetStream().Read(buffer, 0, 100);
-    // Console.WriteLine("Client Input: " + Encoding.ASCII.GetString(buffer));
+    // TCPListener.Start();
+    //Await for Client here somewhere and make async (probably?)
     
+    var TCPClient = TCPListener.AcceptTcpClient();
     var responseBuffer = Encoding.ASCII.GetBytes(DateTime.Now.ToString());
     TCPClient.GetStream().Write(responseBuffer, 0, responseBuffer.Length);
-    
+
     TCPClient.GetStream().Close();
     TCPClient.Close();
+    
+    // TCPListener.Stop();
 }
