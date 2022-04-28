@@ -209,7 +209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4622934959994899910}
         m_TargetAssemblyTypeName: RequestServerTime, Assembly-CSharp
-        m_MethodName: SendRequest
+        m_MethodName: SendRequestTrigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

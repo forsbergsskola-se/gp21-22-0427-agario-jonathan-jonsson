@@ -2,22 +2,23 @@
 using System.Net.Sockets;
 using System.Text;
 
-var endPoint = new IPEndPoint(IPAddress.Loopback, 1111);
-
-var TCPListener = new TcpListener(endPoint);
-TCPListener.Start();
-
-while (true)
+public class TCPServer
 {
-    // TCPListener.Start();
-    //Await for Client here somewhere and make async (probably?)
-    
-    var TCPClient = TCPListener.AcceptTcpClient();
-    var responseBuffer = Encoding.ASCII.GetBytes(DateTime.Now.ToString());
-    TCPClient.GetStream().Write(responseBuffer, 0, responseBuffer.Length);
+    async static Task Main()
+    {
+        var endPoint = new IPEndPoint(IPAddress.Loopback, 1313);
+        var TCPListener = new TcpListener(endPoint);
+        
+        TCPListener.Start();
 
-    TCPClient.GetStream().Close();
-    TCPClient.Close();
-    
-    // TCPListener.Stop();
+        while (true)
+        {
+            var TCPClient = await TCPListener.AcceptTcpClientAsync();
+            var responseBuffer = Encoding.ASCII.GetBytes(DateTime.Now.ToString());
+            TCPClient.GetStream().Write(responseBuffer, 0, responseBuffer.Length);
+
+            TCPClient.GetStream().Close();
+            TCPClient.Close();
+        }      
+    }
 }
