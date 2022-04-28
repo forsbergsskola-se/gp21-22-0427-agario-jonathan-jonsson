@@ -6,16 +6,28 @@ namespace OpenWordMMO;
 
 public class OpenWordServer
 {
-    static void Main()
+    private static void Main()
     {
         var serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
         var server = new UdpClient(serverEndPoint);
+
+        var additiveString = "";
 
         while (true)
         {
             IPEndPoint clientEndPoint = default;
             var response = server.Receive(ref clientEndPoint);
-            Console.WriteLine($"Packets recived from: {clientEndPoint} saying: {Encoding.ASCII.GetString(response)}");
+            var responseString = Encoding.ASCII.GetString(response);
+
+            if (responseString.Length > 20 || responseString.Any(char.IsWhiteSpace))
+            {
+                Console.WriteLine("ERROR: Word is longer than 20 characters or contains whitespaces");
+                //Feedback to client here
+                continue;
+            }
+        
+            additiveString += " " + responseString;
+            Console.WriteLine($"Packets received from: {clientEndPoint} saying: {additiveString}");
         }
     }
 }

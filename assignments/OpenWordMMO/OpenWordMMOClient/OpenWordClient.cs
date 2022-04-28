@@ -12,8 +12,14 @@ public class OpenWordClient
         var clientEndPoint = new IPEndPoint(IPAddress.Loopback, 1314);
 
         var client = new UdpClient(clientEndPoint);
-        var message = Encoding.ASCII.GetBytes("Hello server");
-
-        client.Send(message, message.Length, serverEndPoint);
+        while (true)
+        {
+            Console.WriteLine("Please enter a word, less than 20 characters. No whitespaces allowed");
+            var stringInput = Console.ReadLine();
+            if (stringInput == null) return;
+            var message = Encoding.ASCII.GetBytes(stringInput);
+            client.Send(message, message.Length, serverEndPoint);
+            
+        }
     }
 }
