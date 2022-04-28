@@ -9,12 +9,13 @@ public class OpenWordServer
     private static void Main()
     {
         var serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
-        var server = new UdpClient(serverEndPoint);
 
         var additiveString = "";
 
         while (true)
         {
+            var server = new UdpClient(serverEndPoint);
+
             IPEndPoint clientEndPoint = default;
             var response = server.Receive(ref clientEndPoint);
             var responseString = Encoding.ASCII.GetString(response);
@@ -23,11 +24,17 @@ public class OpenWordServer
             {
                 Console.WriteLine("ERROR: Word is longer than 20 characters or contains whitespaces");
                 //Feedback to client here
-                continue;
+             
+            }
+            else
+            {
+                additiveString += " " + responseString;
+                Console.WriteLine($"Packets received from: {clientEndPoint} saying: {additiveString}");
+
             }
         
-            additiveString += " " + responseString;
-            Console.WriteLine($"Packets received from: {clientEndPoint} saying: {additiveString}");
+            
+            server.Close();
         }
     }
 }
