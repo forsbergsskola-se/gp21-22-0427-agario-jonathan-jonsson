@@ -7,14 +7,12 @@ using UnityEngine;
 public class RequestServerTime : MonoBehaviour
 {
 
-    // public void SendRequest() => Debug.Log("Button pressed - update date and time");
-
+    public Action<string> OnRequestDateAndTime;
+    
+    IPEndPoint ServerEndPoint = new (IPAddress.Loopback, 1111);
+    IPEndPoint ClientEndPoint = new (IPAddress.Loopback, 1112);
     private void SendRequest()
     {
-
-        var ServerEndPoint = new IPEndPoint(IPAddress.Loopback, 1111);
-        var ClientEndPoint = new IPEndPoint(IPAddress.Loopback, 1112);
-
         var TCPClient = new TcpClient(ClientEndPoint);
         
         TCPClient.Connect(ServerEndPoint);
@@ -22,13 +20,9 @@ public class RequestServerTime : MonoBehaviour
         var stream = TCPClient.GetStream();
         byte[] buffer = new byte[100];
         stream.Read(buffer, 0, 100);
-        Debug.Log("Server says: " +Encoding.ASCII.GetString(buffer));
-        
+        var serverBufferResponse = Encoding.ASCII.GetString(buffer);
+        // Debug.Log("Server says: " +Encoding.ASCII.GetString(buffer));
+        OnRequestDateAndTime?.Invoke(serverBufferResponse);
         TCPClient.Close();
-
     }
-
-
-
-
 }

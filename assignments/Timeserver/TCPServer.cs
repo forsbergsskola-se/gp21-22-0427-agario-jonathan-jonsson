@@ -21,6 +21,4 @@ while (true)
     
     TCPClient.GetStream().Close();
     TCPClient.Close();
-    
-    
 }
