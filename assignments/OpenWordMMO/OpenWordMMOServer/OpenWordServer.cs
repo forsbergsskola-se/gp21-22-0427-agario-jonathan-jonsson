@@ -18,8 +18,7 @@ public class OpenWordServer
 
             IPEndPoint clientEndPoint = default;
             var response = server.Receive(ref clientEndPoint);
-            var responseString = Encoding.ASCII.GetString(response);
-
+            var responseString = Encoding.ASCII.GetString(response).Trim();
             if (responseString.Length > 20 || responseString.Any(char.IsWhiteSpace))
             {
                 Console.WriteLine("ERROR: Word is longer than 20 characters or contains whitespaces");
