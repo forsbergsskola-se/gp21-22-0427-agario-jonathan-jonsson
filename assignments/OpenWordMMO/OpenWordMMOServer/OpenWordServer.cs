@@ -9,8 +9,8 @@ public class OpenWordServer
     private static void Main()
     {
         var serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
-
         var additiveString = "";
+        
         while (true)
         {
             var server = new UdpClient(serverEndPoint);
@@ -34,8 +34,8 @@ public class OpenWordServer
                 serverFeedback = Encoding.ASCII.GetBytes(additiveString); 
             }
             
-                server.Send(serverFeedback, serverFeedback.Length, clientEndPoint);
-                server.Close();   
+            server.Send(serverFeedback, serverFeedback.Length, clientEndPoint);
+            server.Close();   
         }
     }
 }

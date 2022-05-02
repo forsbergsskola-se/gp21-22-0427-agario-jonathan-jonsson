@@ -8,12 +8,11 @@ public class UDPClient : MonoBehaviour
 {
     IPEndPoint serverEndpoint = new(IPAddress.Loopback, 1313);
     IPEndPoint clientEndpoint = new(IPAddress.Loopback, 1314);
-
-    
     
     [SerializeField]
     private TMP_InputField inputField;
     private UdpClient client;
+    
     public void SendChatMsg()
     {
             Debug.Log("Please enter a word, less than 20 characters. No whitespaces allowed");
@@ -28,7 +27,8 @@ public class UDPClient : MonoBehaviour
     private void ReceiveServerResponse()
     {
         var response = client.Receive(ref serverEndpoint);
-        Debug.Log("Server response: "+Encoding.ASCII.GetString(response));
         
+        //Issue here: the client cant really discern the message retrieved from server as an error-message. So updating UI even when the return response is a string of warning instead of input.
+        Debug.Log("Server response: "+Encoding.ASCII.GetString(response));
     }
 }
