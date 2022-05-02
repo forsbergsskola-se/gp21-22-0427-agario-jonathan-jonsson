@@ -20,6 +20,7 @@ public class OpenWordClient
             if (stringInput == null) return;
             var message = Encoding.ASCII.GetBytes(stringInput);
             client.Send(message, message.Length, serverEndPoint);
+            
             client.Close();
         }
     }

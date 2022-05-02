@@ -11,29 +11,31 @@ public class OpenWordServer
         var serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
 
         var additiveString = "";
-
         while (true)
         {
             var server = new UdpClient(serverEndPoint);
 
             IPEndPoint clientEndPoint = default;
-            var response = server.Receive(ref clientEndPoint);
-            var responseString = Encoding.ASCII.GetString(response).Trim();
-     
+            var serverInput = server.Receive(ref clientEndPoint);
+            var responseString = Encoding.ASCII.GetString(serverInput).Trim();
+
+            byte[] serverFeedback;
+            
+            //Need to throw some kind of exception instead of my hacky way here I think...?
             if (responseString.Length > 20 || responseString.Any(char.IsWhiteSpace))
             {
                 Console.WriteLine("ERROR: Word is longer than 20 characters or contains whitespaces");
-                //Feedback to client here
-                
+                serverFeedback = Encoding.ASCII.GetBytes("ERROR: Word is longer than 20 characters or contains whitespaces");
             }
             else
             {
                 additiveString += " " + responseString;
                 Console.WriteLine($"Packets received from: {clientEndPoint} saying: {additiveString}");
-                var serverFeedback = Encoding.ASCII.GetBytes(additiveString);
-                server.Send(serverFeedback, serverFeedback.Length, clientEndPoint);
+                serverFeedback = Encoding.ASCII.GetBytes(additiveString); 
             }
-            server.Close();
+            
+                server.Send(serverFeedback, serverFeedback.Length, clientEndPoint);
+                server.Close();   
         }
     }
 }
