@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -8,27 +9,18 @@ using UnityEngine;
 
 public class PlayerClient : MonoBehaviour
 {
-    [SerializeField]
-    public int port = 1314;
-    private IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
+    private readonly IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
 
     public void  ConnectTrigger() => Connect();
-    private TcpClient tcpClient;
+ 
 
-    private async Task Connect()
+    private  void Connect()
     {
-        IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Loopback, port);
-        var tcpClient = new TcpClient(clientEndPoint);
-        await tcpClient.ConnectAsync(serverEndPoint.Address, serverEndPoint.Port);
-        string portString = port.ToString();
-        Debug.Log(portString);
-       await tcpClient.GetStream().WriteAsync(Encoding.ASCII.GetBytes(portString));
+        var tcpClient = new TcpClient();
+        tcpClient.Connect(serverEndPoint.Address, serverEndPoint.Port);
+        var stream = tcpClient.GetStream();
+        var streamReader = new StreamReader(stream);
+        var streamWriter = new StreamWriter(stream);
+        streamWriter.AutoFlush = true;
     }
-
-    private async Task Disconncet()
-    {
-        tcpClient.Close();
-    }
-
-    
 }
