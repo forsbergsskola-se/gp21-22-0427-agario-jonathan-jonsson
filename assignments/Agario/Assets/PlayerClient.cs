@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,16 +12,67 @@ public class PlayerClient : MonoBehaviour
 {
     private readonly IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Loopback, 1313);
 
-    public void  ConnectTrigger() => Connect();
- 
+    // public void  ConnectTrigger() => Connect();
+    private Stream stream;
+    private StreamWriter streamWriter;
 
-    private  void Connect()
+    private TcpClient tcpClient;
+    private void Connect()
     {
-        var tcpClient = new TcpClient();
+        tcpClient = new TcpClient();
         tcpClient.Connect(serverEndPoint.Address, serverEndPoint.Port);
-        var stream = tcpClient.GetStream();
-        var streamReader = new StreamReader(stream);
-        var streamWriter = new StreamWriter(stream);
-        streamWriter.AutoFlush = true;
+        Debug.Log($"Connected to: {serverEndPoint.Address}");
+         stream = tcpClient.GetStream();
+         streamWriter = new StreamWriter(stream);
+         streamWriter.AutoFlush = true;
+    }
+
+    private void Start()
+    {
+        Connect();
+        PlayerSpawn();
+    }
+
+    private void Update()
+    {
+        //Receive block
+        ReceiveOtherPlayerPosition();
+        ReceiveUpdatedVisuals();
+        
+        //Broadcast block
+        UpdatePosition();
+        UpdatePlayerVisual();
+    }
+
+    private void ReceiveUpdatedVisuals()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ReceiveOtherPlayerPosition()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void PlayerSpawn()
+    {
+        throw new NotImplementedException();
+    }
+    private void UpdatePlayerVisual()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void UpdatePosition()
+    {
+ 
+        streamWriter.Write($"My position is: {transform.position.ToString()}");
+
+    }
+
+
+    private void Disconnect()
+    {
+        tcpClient.Close();
     }
 }
