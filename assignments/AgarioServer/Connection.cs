@@ -6,7 +6,7 @@ namespace AgarioServer;
 public class Connection
 {
 
-    private TcpClient client;
+    public TcpClient client;
     
     public Connection(TcpClient client)
     {
@@ -24,20 +24,14 @@ public class Connection
 
         while (true)
         {
-            //Add stream receiving here
+            var inputJson = streamReader.ReadLine();
+            var message = JsonSerializer.Deserialize<Message>(inputJson, options);
+            Console.WriteLine($"Message name: {message.messageName}");
+            if (message.messageName == "LogInMessage")
+            {
+                var value = JsonSerializer.Deserialize<Message<LogInMessage>>(inputJson, options);
+                Console.WriteLine(value.value.playerName +" connected on " +client.Client.RemoteEndPoint);
+            }
         }
-        
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
 }

@@ -14,8 +14,7 @@ using UnityEngine.UI;
 
 public class StartGame : MonoBehaviour
 {
-
-    [FormerlySerializedAs("MainClient")] [SerializeField]
+    [SerializeField]
     private Connection connection;
     [SerializeField]
     private TMP_InputField nameField;
@@ -26,7 +25,7 @@ public class StartGame : MonoBehaviour
         Debug.Log($"Connected to: {tcpClient.Client.LocalEndPoint}");
         var playerName = nameField.text;
         connection.Init(tcpClient, playerName);
-        SceneManager.LoadScene("AgarioMain");
+        SceneManager.LoadSceneAsync("AgarioMain");
 
     }
 }
