@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/AgarioMain.unity
+    guid: 2913b19d34751fd4da10eeaf62db0d2b
+  - enabled: 1
+    path: Assets/Scenes/AgarioMainMenu.unity
+    guid: cdcc7be9261b6da4eaee0481049ba93c
   m_configObjects: {}

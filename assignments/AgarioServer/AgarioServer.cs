@@ -18,12 +18,11 @@ public class AgarioServer
         {
             Console.WriteLine("Awaiting connection...");        
             tcpClient =  tcpListener.AcceptTcpClient();
-            new Thread(() =>
-            {
+             
                 Console.WriteLine($"{tcpClient.Client.RemoteEndPoint} has joined the server");
                 
 
-            }).Start();  
+           
         }
        
         
