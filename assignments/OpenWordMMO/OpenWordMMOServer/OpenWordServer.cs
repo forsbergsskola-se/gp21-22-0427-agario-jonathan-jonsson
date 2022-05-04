@@ -20,19 +20,29 @@ public class OpenWordServer
             var responseString = Encoding.ASCII.GetString(serverInput).Trim();
 
             byte[] serverFeedback;
-            
-            //Need to throw some kind of exception instead of my hacky way here I think...?
-            if (responseString.Length > 20 || responseString.Any(char.IsWhiteSpace))
+
+            try
             {
-                Console.WriteLine("ERROR: Word is longer than 20 characters or contains whitespaces");
-                serverFeedback = Encoding.ASCII.GetBytes("ERROR: Word is longer than 20 characters or contains whitespaces");
+                //Need to throw some kind of exception instead of my hacky way here I think...?
+                if (responseString.Length > 20 || responseString.Any(char.IsWhiteSpace))
+                {
+                    Console.WriteLine("ERROR: Word is longer than 20 characters or contains whitespaces");
+                    // serverFeedback = Encoding.ASCII.GetBytes("ERROR: Word is longer than 20 characters or contains whitespaces");
+                    throw new Exception("ERROR: Word is longer than 20 characters or contains whitespaces.");
+
+                }
+                 
+                    additiveString += " " + responseString;
+                    Console.WriteLine($"Packets received from: {clientEndPoint} saying: {additiveString}");
+                    serverFeedback = Encoding.ASCII.GetBytes(additiveString); 
+                
             }
-            else
+            catch (Exception e)
             {
-                additiveString += " " + responseString;
-                Console.WriteLine($"Packets received from: {clientEndPoint} saying: {additiveString}");
-                serverFeedback = Encoding.ASCII.GetBytes(additiveString); 
+                Console.WriteLine(e);
+                throw;
             }
+           
             
             server.Send(serverFeedback, serverFeedback.Length, clientEndPoint);
             server.Close();   
