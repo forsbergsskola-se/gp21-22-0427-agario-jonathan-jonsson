@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class MainClient : MonoBehaviour
     [SerializeField]
     private string playerName;
 
+    private StreamWriter streamWriter;
+
     private void Start()
     {
         DontDestroyOnLoad(this);
@@ -20,9 +23,14 @@ public class MainClient : MonoBehaviour
     {
         this.client = client;
         this.playerName = playerName;
+        streamWriter = new StreamWriter(client.GetStream());
+        
+    }
 
-        Debug.Log(client.Client.LocalEndPoint);
-        Debug.Log(playerName);
+    public void SendMessage<T>(T message)
+    {
+        streamWriter.WriteLine(JsonUtility.ToJson(message));
+        streamWriter.Flush();
     }
     
 }
