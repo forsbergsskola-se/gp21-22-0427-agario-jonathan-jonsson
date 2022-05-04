@@ -1,11 +1,7 @@
-﻿
-
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
-
  
-public class AgarioServer
+public class ServerClientStartup
 {
     private static TcpClient tcpClient; 
     static void Main()
@@ -17,12 +13,8 @@ public class AgarioServer
         while (true)
         {
             Console.WriteLine("Awaiting connection...");        
-            tcpClient =  tcpListener.AcceptTcpClient();
-             
-                Console.WriteLine($"{tcpClient.Client.RemoteEndPoint} has joined the server");
-                
-
-           
+            tcpClient =  tcpListener.AcceptTcpClient(); 
+            Console.WriteLine($"{tcpClient.Client.RemoteEndPoint} has joined the server");
         }
        
         

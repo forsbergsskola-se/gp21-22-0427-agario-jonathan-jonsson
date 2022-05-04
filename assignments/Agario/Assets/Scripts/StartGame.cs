@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class StartGame : MonoBehaviour
 {
 
-    [SerializeField]
-    private MainClient MainClient;
+    [FormerlySerializedAs("MainClient")] [SerializeField]
+    private Connection connection;
     [SerializeField]
     private TMP_InputField nameField;
     public void Connect()
@@ -24,7 +25,7 @@ public class StartGame : MonoBehaviour
         tcpClient.Connect(IPAddress.Loopback, 1313);
         Debug.Log($"Connected to: {tcpClient.Client.LocalEndPoint}");
         var playerName = nameField.text;
-        MainClient.Init(tcpClient, playerName);
+        connection.Init(tcpClient, playerName);
         SceneManager.LoadScene("AgarioMain");
 
     }

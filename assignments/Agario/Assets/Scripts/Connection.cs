@@ -5,7 +5,7 @@ using System.IO;
 using System.Net.Sockets;
 using UnityEngine;
 
-public class MainClient : MonoBehaviour
+public class Connection : MonoBehaviour
 {
     [SerializeField]
     private TcpClient client;
