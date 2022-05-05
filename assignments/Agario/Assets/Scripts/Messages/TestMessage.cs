@@ -1,6 +1,5 @@
-public class TestMessage
+public class TestMessage : Message
 {
     public string testString;
-    public int testInt;
-    public bool testBool;
+ 
 }

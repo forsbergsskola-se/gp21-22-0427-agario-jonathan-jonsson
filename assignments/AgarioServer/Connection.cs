@@ -8,18 +8,19 @@ public class Connection
 
     public TcpClient client;
     public StreamWriter StreamWriter;
-    
+    public string playerName;
     private readonly JsonSerializerOptions options = new ()
     {
         IncludeFields = true
     };
     
-    public Connection(TcpClient client)
+    public async Task Init(TcpClient client)
     {
         this.client = client;
         
         StreamWriter = new StreamWriter(client.GetStream());
         new Thread(ReadMessage).Start();
+        
     }
 
     public void SendMessage<T>(T message)
@@ -39,13 +40,20 @@ public class Connection
         {
            var inputJson = streamReader.ReadLine();
             var message = JsonSerializer.Deserialize<Message>(inputJson, options);
-            Console.WriteLine($"Message name: {message.messageName}");
-            
-            if (message.messageName == "LogInMessage")
+
+            switch (message.messageName)
             {
-                var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                Console.WriteLine($"{specificMessage.playerName} joined the server ({client.Client.RemoteEndPoint})!");
+                case "LogInMessage":
+                    var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
+                    Console.WriteLine($"{specificMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server !");
+                    playerName = specificMessage.playerName;
+                    break;
+                default:
+                    throw new Exception("ERROR: Specific message not found on server!");
             }
+           
         }
     }
+    
+    
 }

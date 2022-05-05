@@ -25,7 +25,6 @@ public class StartGame : MonoBehaviour
     {
         var tcpClient = new TcpClient();
         tcpClient.Connect(IPAddress.Loopback, 1313);
-        Debug.Log($"Connected to: {tcpClient.Client.LocalEndPoint}");
         var playerName = nameField.text;
          connection.Init(tcpClient, playerName);
         SceneManager.LoadSceneAsync("AgarioMain");
