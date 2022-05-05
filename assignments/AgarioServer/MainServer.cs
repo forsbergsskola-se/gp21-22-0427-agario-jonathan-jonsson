@@ -2,9 +2,10 @@
 using System.Net.Sockets;
 using AgarioServer;
 
-public class ServerInit
+public class MainServer //TODO: name??? atm only entry point for player connection and starting player init
 {
     private static TcpClient tcpClient; 
+    
     static async Task Main()
     {
         var endpoint = new IPEndPoint(IPAddress.Loopback, 1313);
@@ -16,24 +17,13 @@ public class ServerInit
             Console.WriteLine("Awaiting connection...");        
             tcpClient =  await tcpListener.AcceptTcpClientAsync();
             var playerConnection =  new Connection();
-           var playerInit = new Task(()=> playerConnection.Init(tcpClient));
-           playerInit.Start();
-           // var serverWelcomeResponse = new Task()
+            await  playerConnection.Init(tcpClient);
 
 
         }
 
     }
-    
-    public async Task SendWelcomeResponse(Connection playerConnection)
-    {
-        playerConnection.SendMessage(new StringMessage()
-        {
-             messageName = MessagesEnum.StringMessage,
-             stringText = $"Welcome to the server, {playerConnection.playerName}"
-        });
- 
-    }
+
 
 }
 

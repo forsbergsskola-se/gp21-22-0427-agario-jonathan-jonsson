@@ -24,7 +24,7 @@ public class StartGame : MonoBehaviour
     public async Task Connect()
     {
         var tcpClient = new TcpClient();
-        tcpClient.Connect(IPAddress.Loopback, 1313);
+        await tcpClient.ConnectAsync(IPAddress.Loopback, 1313);
         var playerName = nameField.text;
         
         await connection.Init(tcpClient, playerName);

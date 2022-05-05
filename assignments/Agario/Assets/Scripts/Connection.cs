@@ -25,24 +25,27 @@ public class Connection : MonoBehaviour
         this.client = client;
         this.playerName = playerName;
         streamWriter = new StreamWriter(client.GetStream());
-        new Task(ReadMessage).Start();
-      
-        
-        await SendMessage(new LogInMessage()
+        new Task(()=>ReadMessage()).Start();
+        SendClientLogInMessage();
+    }
+
+    private void SendClientLogInMessage()
+    {
+        new Task(() => SendMessageAsync(new LogInMessage()
             {
                 messageName = MessagesEnum.LogInMessage,
                 playerName = this.playerName
             }
-        );
+        )).Start();
     }
 
-    public async Task SendMessage<T>(T message)
+    public async Task SendMessageAsync<T>(T message)
     {
          await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
          await streamWriter.FlushAsync();
     }
 
-    public void ReadMessage()
+    public async Task ReadMessage()
     {
         var streamReader = new StreamReader(client.GetStream());
 
