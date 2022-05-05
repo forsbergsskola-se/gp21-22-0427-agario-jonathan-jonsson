@@ -1,4 +1,4 @@
-public class LogInMessage
+public class LogInMessage : Message
 {
      public string playerName;
 }

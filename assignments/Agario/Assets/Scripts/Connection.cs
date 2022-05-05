@@ -1,6 +1,7 @@
 using System.Collections;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Connection : MonoBehaviour
@@ -17,28 +18,25 @@ public class Connection : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void Init(TcpClient client, string playerName)
+    public async Task Init(TcpClient client, string playerName)
     {
         this.client = client;
         this.playerName = playerName;
         streamWriter = new StreamWriter(client.GetStream());
         Debug.Log(this.playerName);
-        SendMessage(new Message<LogInMessage>()
+
+      await  SendMessage(new LogInMessage()
             {
                 messageName = "LogInMessage",
-                value = new LogInMessage()
-                {
-                    playerName = this.playerName
-                }
+                playerName = this.playerName
             }
-        ); 
-
+        );
     }
 
-    public void SendMessage<T>(T message)
+    public async Task SendMessage<T>(T message)
     {
-        streamWriter.WriteLine(JsonUtility.ToJson(message));
-        streamWriter.Flush();
+        await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
+        await streamWriter.FlushAsync();
     }
  
 }

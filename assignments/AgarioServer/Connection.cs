@@ -24,13 +24,14 @@ public class Connection
 
         while (true)
         {
-            var inputJson = streamReader.ReadLine();
+           var inputJson = streamReader.ReadLine();
             var message = JsonSerializer.Deserialize<Message>(inputJson, options);
             Console.WriteLine($"Message name: {message.messageName}");
+            
             if (message.messageName == "LogInMessage")
             {
-                var value = JsonSerializer.Deserialize<Message<LogInMessage>>(inputJson, options);
-                Console.WriteLine(value.value.playerName +" connected on " +client.Client.RemoteEndPoint);
+                var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
+                Console.WriteLine(specificMessage.playerName +" connected on " +client.Client.RemoteEndPoint);
             }
         }
     }

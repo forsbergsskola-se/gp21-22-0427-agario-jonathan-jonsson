@@ -18,16 +18,21 @@ public class StartGame : MonoBehaviour
     private Connection connection;
     [SerializeField]
     private TMP_InputField nameField;
-    public void Connect()
+
+    public void ConnectOnClick() => Connect();
+    
+    public async Task Connect()
     {
         var tcpClient = new TcpClient();
         tcpClient.Connect(IPAddress.Loopback, 1313);
         Debug.Log($"Connected to: {tcpClient.Client.LocalEndPoint}");
         var playerName = nameField.text;
-        connection.Init(tcpClient, playerName);
+        await connection.Init(tcpClient, playerName);
         SceneManager.LoadSceneAsync("AgarioMain");
 
     }
+    
+    
 }
 
 

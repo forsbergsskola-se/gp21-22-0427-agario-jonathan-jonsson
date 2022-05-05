@@ -1,6 +1,6 @@
 ﻿namespace AgarioServer;
 
-public class LogInMessage
+public class LogInMessage : Message
 {
-    public string playerName;
+     public string playerName;
 }

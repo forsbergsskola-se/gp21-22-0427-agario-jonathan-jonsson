@@ -17,9 +17,6 @@ public class ServerClientStartup
             var playerConnection =  new Connection(tcpClient);
             Console.WriteLine($"{tcpClient.Client.RemoteEndPoint} has joined the server");
         }
-       
-        
-        
 
     }
 

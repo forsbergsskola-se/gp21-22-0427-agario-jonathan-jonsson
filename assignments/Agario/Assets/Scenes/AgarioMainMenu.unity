@@ -123,6 +123,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &80657933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7579160680353274362, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
+  m_PrefabInstance: {fileID: 7579160681660847723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &80657939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80657933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232771aa9b5d5c645b51904560271ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connection: {fileID: 6192253108142792749}
+  nameField: {fileID: 128825317}
 --- !u!1 &82286223
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,13 +323,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 23144711, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
-      propertyPath: nameField
-      value: 
-      objectReference: {fileID: 128825317}
-    - target: {fileID: 23144711, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
-      propertyPath: MainClient
+      propertyPath: connection
       value: 
       objectReference: {fileID: 6192253108142792749}
+    - target: {fileID: 7579160680353274360, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 80657939}
+    - target: {fileID: 7579160680353274360, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ConnectOnClick
+      objectReference: {fileID: 0}
     - target: {fileID: 7579160681531072772, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
       propertyPath: m_Name
       value: MenuUI
@@ -399,7 +422,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 23144711, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 890e02a283e324047b6c71f6af44a316, type: 3}
 --- !u!1001 &8848751404798415941
 PrefabInstance:
