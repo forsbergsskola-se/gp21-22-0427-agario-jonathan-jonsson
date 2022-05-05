@@ -7,20 +7,33 @@ public class Connection
 {
 
     public TcpClient client;
+    public StreamWriter StreamWriter;
+    
+    private readonly JsonSerializerOptions options = new ()
+    {
+        IncludeFields = true
+    };
     
     public Connection(TcpClient client)
     {
         this.client = client;
+        
+        StreamWriter = new StreamWriter(client.GetStream());
         new Thread(ReadMessage).Start();
     }
 
+    public void SendMessage<T>(T message)
+    {
+        StreamWriter.WriteLine(JsonSerializer.Serialize(message, options));
+        StreamWriter.Flush();
+    }
+    
+    
+    
     public void ReadMessage()
     {
         var streamReader = new StreamReader(client.GetStream());
-        var options = new JsonSerializerOptions()
-        {
-            IncludeFields = true
-        };
+       
 
         while (true)
         {
@@ -31,7 +44,7 @@ public class Connection
             if (message.messageName == "LogInMessage")
             {
                 var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                Console.WriteLine(specificMessage.playerName +" connected on " +client.Client.RemoteEndPoint);
+                Console.WriteLine($"{specificMessage.playerName} joined the server ({client.Client.RemoteEndPoint})!");
             }
         }
     }

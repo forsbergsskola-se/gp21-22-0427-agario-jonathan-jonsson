@@ -18,14 +18,14 @@ public class Connection : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public async Task Init(TcpClient client, string playerName)
+    public void Init(TcpClient client, string playerName)
     {
         this.client = client;
         this.playerName = playerName;
         streamWriter = new StreamWriter(client.GetStream());
         Debug.Log(this.playerName);
 
-      await  SendMessage(new LogInMessage()
+       SendMessage(new LogInMessage()
             {
                 messageName = "LogInMessage",
                 playerName = this.playerName
@@ -33,10 +33,10 @@ public class Connection : MonoBehaviour
         );
     }
 
-    public async Task SendMessage<T>(T message)
+    public void SendMessage<T>(T message)
     {
-        await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
-        await streamWriter.FlushAsync();
+         streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
+         streamWriter.FlushAsync();
     }
  
 }
