@@ -14,12 +14,14 @@ public class Connection
         IncludeFields = true
     };
     
-    public async Task Init(TcpClient client)
+    public Connection(TcpClient client)
     {
         this.client = client;
         
         StreamWriter = new StreamWriter(client.GetStream());
-        new Thread(ReadMessage).Start();
+        new Task(ReadMessage).Start();
+       
+
         
     }
 
@@ -31,10 +33,11 @@ public class Connection
     
     
     
+    
     public void ReadMessage()
     {
         var streamReader = new StreamReader(client.GetStream());
-       
+ 
 
         while (true)
         {
@@ -54,6 +57,4 @@ public class Connection
            
         }
     }
-    
-    
 }
