@@ -25,7 +25,7 @@ public class Connection : MonoBehaviour
         this.client = client;
         this.playerName = playerName;
         streamWriter = new StreamWriter(client.GetStream());
-        new Task(()=>ReadMessage()).Start();
+        new Thread(()=>ReadMessage()).Start();
         SendClientLogInMessage();
     }
 

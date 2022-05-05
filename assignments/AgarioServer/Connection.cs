@@ -28,7 +28,7 @@ public class Connection
     {
         this.client = client;
         StreamWriter = new StreamWriter(client.GetStream());
-        new Task(()=>ReadMessage()).Start();
+        new Thread(()=>ReadMessage()).Start();
         
     }
         
