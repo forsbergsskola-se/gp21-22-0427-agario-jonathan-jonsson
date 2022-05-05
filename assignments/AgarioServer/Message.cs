@@ -2,7 +2,7 @@
 
 public class Message
 {
-    public string messageName;
+    public MessagesEnum messageName;
 }
 
 public class Message<T> : Message

@@ -20,24 +20,26 @@ public class Connection : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void Init(TcpClient client, string playerName)
+    public async Task Init(TcpClient client, string playerName)
     {
         this.client = client;
         this.playerName = playerName;
         streamWriter = new StreamWriter(client.GetStream());
         new Task(ReadMessage).Start();
-       SendMessage(new LogInMessage()
+      
+        
+        await SendMessage(new LogInMessage()
             {
-                messageName = "LogInMessage",
+                messageName = MessagesEnum.LogInMessage,
                 playerName = this.playerName
             }
         );
     }
 
-    public void SendMessage<T>(T message)
+    public async Task SendMessage<T>(T message)
     {
-         streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
-         streamWriter.FlushAsync();
+         await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
+         await streamWriter.FlushAsync();
     }
 
     public void ReadMessage()
@@ -52,9 +54,9 @@ public class Connection : MonoBehaviour
 
             switch (message.messageName)
             {
-                case "TestMessage":
-                    var specificMessage = JsonUtility.FromJson<TestMessage>(inputJson);
-                    Debug.Log(specificMessage.testString);
+                case MessagesEnum.StringMessage:
+                    var specificMessage = JsonUtility.FromJson<StringMessage>(inputJson);
+                    Debug.Log(specificMessage.stringText);
                     break;
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");

@@ -21,12 +21,13 @@ public class StartGame : MonoBehaviour
 
     public void ConnectOnClick() => Connect();
     
-    public void Connect()
+    public async Task Connect()
     {
         var tcpClient = new TcpClient();
         tcpClient.Connect(IPAddress.Loopback, 1313);
         var playerName = nameField.text;
-         connection.Init(tcpClient, playerName);
+        
+        await connection.Init(tcpClient, playerName);
         SceneManager.LoadSceneAsync("AgarioMain");
 
     }

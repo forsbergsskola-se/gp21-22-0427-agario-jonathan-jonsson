@@ -14,27 +14,22 @@ public class Connection
         IncludeFields = true
     };
     
-    public Connection(TcpClient client)
+    public async Task Init(TcpClient client)
     {
         this.client = client;
-        
         StreamWriter = new StreamWriter(client.GetStream());
-        new Task(ReadMessage).Start();
-       
-
+        new Task(()=>ReadMessage()).Start();
         
     }
 
-    public void SendMessage<T>(T message)
+    public async Task SendMessage<T>(T message)
     {
-        StreamWriter.WriteLine(JsonSerializer.Serialize(message, options));
-        StreamWriter.Flush();
+       await StreamWriter.WriteLineAsync(JsonSerializer.Serialize(message, options));
+       await StreamWriter.FlushAsync();
     }
     
     
-    
-    
-    public void ReadMessage()
+    public async Task ReadMessage()
     {
         var streamReader = new StreamReader(client.GetStream());
  
@@ -46,9 +41,9 @@ public class Connection
 
             switch (message.messageName)
             {
-                case "LogInMessage":
+                case MessagesEnum.LogInMessage:
                     var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                    Console.WriteLine($"{specificMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server !");
+                    Console.WriteLine($"{specificMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server!");
                     playerName = specificMessage.playerName;
                     break;
                 default:
