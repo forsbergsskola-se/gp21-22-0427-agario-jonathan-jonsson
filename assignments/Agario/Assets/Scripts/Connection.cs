@@ -51,10 +51,9 @@ public class Connection : MonoBehaviour
 
         while (true)
         {
-            var inputJson = streamReader.ReadLine();
-
+            var inputJson = await streamReader.ReadLineAsync();
             var message = JsonUtility.FromJson<Message>(inputJson);
-
+            
             switch (message.messageName)
             {
                 case MessagesEnum.StringMessage:
@@ -62,6 +61,8 @@ public class Connection : MonoBehaviour
                     Debug.Log(specificMessage.stringText);
                     break;
                 case MessagesEnum.ServerIDAssignmentMessage:
+                    var serverIDAssignmentMessage = JsonUtility.FromJson<ServerIDAssignmentMessage>(inputJson);
+                    Debug.Log(serverIDAssignmentMessage.ID);
                     break;
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");

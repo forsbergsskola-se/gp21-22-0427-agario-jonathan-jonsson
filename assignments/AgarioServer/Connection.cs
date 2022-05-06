@@ -7,7 +7,7 @@ public class Connection
 {
 
     public TcpClient client;
-    public StreamWriter StreamWriter;
+    public StreamWriter streamWriter;
     private static int id;
     public PlayerState playerState;
 
@@ -18,75 +18,21 @@ public class Connection
             PlayerServerId = ++id
         };
     }
-    
-    private readonly JsonSerializerOptions options = new ()
-    {
-        IncludeFields = true
-    };
+ 
     
     public async Task Init(TcpClient client)
     {
         this.client = client;
-        StreamWriter = new StreamWriter(client.GetStream());
-        new Thread(()=>ReadMessage()).Start();
+        streamWriter = new StreamWriter(client.GetStream());
+        streamWriter.AutoFlush = true;
+        new Thread(()=>MessageHandler.ReadMessage(client,playerState)).Start();
         
     }
         
-    public async Task SendMessageAsync<T>(T message)
-    {
-       await StreamWriter.WriteLineAsync(JsonSerializer.Serialize(message, options));
-       await StreamWriter.FlushAsync();
-    }
+  
     
     
-    public async Task ReadMessage()
-    {
-        var streamReader = new StreamReader(client.GetStream());
- 
-
-        while (true)
-        {
-           var inputJson = streamReader.ReadLine();
-           
-            var message = JsonSerializer.Deserialize<Message>(inputJson, options);
-
-            switch (message.messageName)
-            {
-                case MessagesEnum.LogInMessage:
-                    var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-
-                    Console.WriteLine($"{specificMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server!");
-
-                    playerState.playerName = specificMessage.playerName;
-                    new Task(()=> SendWelcomeResponse(playerState)).Start(); //TODO: Is it really smart having this here?
-                    Console.WriteLine("Send Welcome message - Done");
-                    // new Task(()=>SendServerID(playerState)).Start();
-                    Console.WriteLine("Send assigned ID - Done");
-                    break;
-                default:
-                    throw new Exception("ERROR: Specific message not found on server!");
-            }
-           
-        }
-    }
+   
     
-    public  async Task SendWelcomeResponse(PlayerState playerState)
-    {
-      await SendMessageAsync(new StringMessage()
-        {
-            messageName = MessagesEnum.StringMessage,
-            stringText = $"Welcome to the server, {playerState.playerName}. You have been assigned ID: {playerState.PlayerServerId}"
-        });
-        
-    }
-
-    public async Task SendServerID(PlayerState playerState)
-    {
-        await SendMessageAsync(new StringMessage()
-        {
-        messageName = MessagesEnum.ServerIDAssignmentMessage,
-        stringText = "TEST"
-        
-        });
-    }
+  
 }
