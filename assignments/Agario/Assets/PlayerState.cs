@@ -6,37 +6,10 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
- public string name;
+ public string playerName;
  public int ServerID;
 
- [SerializeField]
- private Connection connection;
- 
- private void Start()
- {
-  connection = FindObjectOfType<Connection>();
-  
-  //TODO: IF current pos != stored pos on server:
-  StartCoroutine(UpdatePosToServer());
- }
+ public float XPos;
+ public float YPos;
 
- IEnumerator UpdatePosToServer()
- {
-  while (true)
-  {
-   
-   yield return new WaitForSeconds(1f);
-   var msg = new Vector2Message()
-   {
-    messageName = MessagesEnum.Vector2Message,
-    x = transform.position.x,
-    y = transform.position.y
-    
-
-   };
-   MessageHandler.SendMessageAsync(msg, connection.streamWriter);
-
-
-  }
- }
 }

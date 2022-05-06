@@ -29,9 +29,9 @@ public class MessageHandler
             switch (message.messageName)
             {
                 case MessagesEnum.LogInMessage:
-                    var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                    Console.WriteLine($"{specificMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server!");
-                    playerState.playerName = specificMessage.playerName;
+                    var logInMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
+                    Console.WriteLine($"{logInMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server!");
+                    playerState.playerName = logInMessage.playerName;
  
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
@@ -41,7 +41,7 @@ public class MessageHandler
 
                 case MessagesEnum.Vector2Message:
                     var Vector2Message = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
-                    Console.WriteLine($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
+                    Console.WriteLine($"{playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 default:
