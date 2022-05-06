@@ -2,7 +2,8 @@
 
 public enum MessagesEnum
 {
-    ServerIdAssignmentMessage,
     LogInMessage,
+    ServerIdAssignmentMessage,
     StringMessage,
+    Vector2Message
 }

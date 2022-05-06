@@ -34,6 +34,16 @@ public class MessageHandler
                     playerState.playerName = specificMessage.playerName;
  
                     break;
+                case MessagesEnum.ServerIdAssignmentMessage:
+                    break;
+                case MessagesEnum.StringMessage:
+                    break;
+
+                case MessagesEnum.Vector2Message:
+                    var Vector2Message = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
+                    Console.WriteLine($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
+                    break;
+
                 default:
                     throw new Exception("ERROR: Specific message not found on server!");
             }
