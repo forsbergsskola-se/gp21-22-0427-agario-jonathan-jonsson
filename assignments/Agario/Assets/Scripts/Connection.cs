@@ -61,6 +61,8 @@ public class Connection : MonoBehaviour
                     var specificMessage = JsonUtility.FromJson<StringMessage>(inputJson);
                     Debug.Log(specificMessage.stringText);
                     break;
+                case MessagesEnum.ServerIDAssignmentMessage:
+                    break;
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");
             }

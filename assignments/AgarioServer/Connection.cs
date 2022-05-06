@@ -59,7 +59,9 @@ public class Connection
 
                     playerState.playerName = specificMessage.playerName;
                     new Task(()=> SendWelcomeResponse(playerState)).Start(); //TODO: Is it really smart having this here?
-                    
+                    Console.WriteLine("Send Welcome message - Done");
+                    // new Task(()=>SendServerID(playerState)).Start();
+                    Console.WriteLine("Send assigned ID - Done");
                     break;
                 default:
                     throw new Exception("ERROR: Specific message not found on server!");
@@ -68,13 +70,23 @@ public class Connection
         }
     }
     
-    public  async Task SendWelcomeResponse(PlayerState playerConnection)
+    public  async Task SendWelcomeResponse(PlayerState playerState)
     {
       await SendMessageAsync(new StringMessage()
         {
             messageName = MessagesEnum.StringMessage,
             stringText = $"Welcome to the server, {playerState.playerName}. You have been assigned ID: {playerState.PlayerServerId}"
         });
+        
+    }
 
+    public async Task SendServerID(PlayerState playerState)
+    {
+        await SendMessageAsync(new StringMessage()
+        {
+        messageName = MessagesEnum.ServerIDAssignmentMessage,
+        stringText = "TEST"
+        
+        });
     }
 }
