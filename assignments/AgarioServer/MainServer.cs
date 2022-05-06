@@ -18,12 +18,11 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
             tcpClient =  await tcpListener.AcceptTcpClientAsync();
             var playerConnection =  new Connection();
             await  playerConnection.Init(tcpClient);
-            await SendWelcomeResponse(playerConnection);
-            Console.WriteLine("Send Welcome message - Done");
+           await SendWelcomeResponse(playerConnection);
+           Console.WriteLine("Send welcome response - Done");
             await SendServerID(playerConnection);
             Console.WriteLine("Send assigned ID - Done");
         }
-
     }
      
     public static async Task SendWelcomeResponse(Connection playerConnection)
@@ -37,18 +36,16 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         };
         
         await MessageHandler.SendMessageAsync(newStringMessage, playerConnection.streamWriter);
-         
-        
     }
 
     public static async Task SendServerID(Connection playerConnection)
     {
-        var serverIDmessage = new ServerIDAssignmentMessage
+        var serverIDMessage = new ServerIDAssignmentMessage
         {
-            messageName = MessagesEnum.ServerIDAssignmentMessage,
+            messageName = MessagesEnum.ServerIdAssignmentMessage,
             ID = playerConnection.playerState.PlayerServerId
         };
-        await MessageHandler.SendMessageAsync(serverIDmessage, playerConnection.streamWriter);
+        await MessageHandler.SendMessageAsync(serverIDMessage, playerConnection.streamWriter);
  
     }
 

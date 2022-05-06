@@ -18,21 +18,12 @@ public class Connection
             PlayerServerId = ++id
         };
     }
- 
-    
     public async Task Init(TcpClient client)
     {
         this.client = client;
         streamWriter = new StreamWriter(client.GetStream());
         streamWriter.AutoFlush = true;
-        new Thread(()=>MessageHandler.ReadMessage(client,playerState)).Start();
+        new Task(()=>MessageHandler.ReadMessage(this.client,playerState)).Start();
         
     }
-        
-  
-    
-    
-   
-    
-  
 }

@@ -9,6 +9,7 @@ public class MessageHandler
     {
         IncludeFields = true
     };
+    
     public static async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
     {
         await streamWriter.WriteLineAsync(JsonSerializer.Serialize(message, options));
@@ -19,7 +20,6 @@ public class MessageHandler
     {
         var streamReader = new StreamReader(client.GetStream());
        
-
         while (true)
         {
             var inputJson = await streamReader.ReadLineAsync();
@@ -30,9 +30,7 @@ public class MessageHandler
             {
                 case MessagesEnum.LogInMessage:
                     var specificMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-
                     Console.WriteLine($"{specificMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server!");
-
                     playerState.playerName = specificMessage.playerName;
  
                     break;
