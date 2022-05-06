@@ -5,25 +5,24 @@ namespace AgarioServer;
 
 public class Connection
 {
-
-    public TcpClient client;
+    public playerClient playerClient;
     public StreamWriter streamWriter;
     private static int id;
-    public PlayerState playerState;
 
     public Connection()
     {
-        playerState= new PlayerState()
+        playerClient= new playerClient()
         {
-            PlayerServerId = ++id
+            playerServerId = ++id,
+            playerState = new PlayerState()
         };
     }
-    public async Task Init(TcpClient client)
+    public async Task Init(TcpClient tcpClient)
     {
-        this.client = client;
-        streamWriter = new StreamWriter(client.GetStream());
+        playerClient.playerTcpClient = tcpClient;
+        streamWriter = new StreamWriter(tcpClient.GetStream());
         streamWriter.AutoFlush = true;
-        new Task(()=>MessageHandler.ReadMessage(this.client,playerState)).Start();
+        new Task(()=>MessageHandler.ReadMessage(playerClient)).Start();
         
     }
 }

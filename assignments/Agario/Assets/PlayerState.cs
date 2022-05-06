@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour
 {
  public string playerName;
- public int ServerID;
+ public float size;
 
  public float XPos;
  public float YPos;

@@ -3,7 +3,10 @@
 public class PlayerState
 {
     public string playerName;
-    public int PlayerServerId;
-    public int size;
+    
+    public float size;
+
+    public float xPos;
+    public float yPos;
 
 }

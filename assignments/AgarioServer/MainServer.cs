@@ -4,7 +4,7 @@ using AgarioServer;
 
 public class MainServer //TODO: name??? atm only entry point for player connection and starting player init
 {
-    private static TcpClient tcpClient; 
+    
     
     static async Task Main()
     {
@@ -15,13 +15,17 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         while (true)
         {
             Console.WriteLine("Awaiting connection...");        
-            tcpClient =  await tcpListener.AcceptTcpClientAsync();
+            var tcpClient =  await tcpListener.AcceptTcpClientAsync();
             var playerConnection =  new Connection();
+            
             await  playerConnection.Init(tcpClient);
-           await SendWelcomeResponse(playerConnection);
-           Console.WriteLine("Send welcome response - Done");
+ 
+            //TODO: Name is not set in Init before the send welcome message is sent. Or rather, maybe it sends before receiving from server. How handle?
+            await SendWelcomeResponse(playerConnection);
+            Console.WriteLine("Send welcome response - Done");
             await SendServerID(playerConnection);
             Console.WriteLine("Send assigned ID - Done");
+            
         }
     }
      
@@ -31,7 +35,7 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         {
             messageName = MessagesEnum.StringMessage,
             stringText =
-                $"Welcome to the server, {playerConnection.playerState.playerName}. You have been assigned ID: {playerConnection.playerState.PlayerServerId}"
+                $"Welcome to the server, {playerConnection.playerClient.playerState.playerName}. You have been assigned ID: {playerConnection.playerClient.playerServerId}"
 
         };
         
@@ -43,7 +47,7 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         var serverIDMessage = new ServerIDAssignmentMessage
         {
             messageName = MessagesEnum.ServerIdAssignmentMessage,
-            ID = playerConnection.playerState.PlayerServerId
+            ID = playerConnection.playerClient.playerServerId
         };
         await MessageHandler.SendMessageAsync(serverIDMessage, playerConnection.streamWriter);
  

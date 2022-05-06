@@ -16,22 +16,22 @@ public class MessageHandler
         await streamWriter.FlushAsync();
     }
     
-    public static async Task ReadMessage(TcpClient client, PlayerState playerState)
+    public static async Task ReadMessage(playerClient playerClient)
     {
-        var streamReader = new StreamReader(client.GetStream());
+        var streamReader = new StreamReader(playerClient.playerTcpClient.GetStream());
        
         while (true)
         {
             var inputJson = await streamReader.ReadLineAsync();
            
             var message = JsonSerializer.Deserialize<Message>(inputJson, options);
-
+            
             switch (message.messageName)
             {
                 case MessagesEnum.LogInMessage:
                     var logInMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                    Console.WriteLine($"{logInMessage.playerName} ({client.Client.RemoteEndPoint}) joined the server!");
-                    playerState.playerName = logInMessage.playerName;
+                    Console.WriteLine($"{logInMessage.playerName} ({playerClient.playerTcpClient.Client.RemoteEndPoint}) joined the server!");
+                    playerClient.playerState.playerName = logInMessage.playerName;
  
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
@@ -41,7 +41,11 @@ public class MessageHandler
 
                 case MessagesEnum.Vector2Message:
                     var Vector2Message = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
-                    Console.WriteLine($"{playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
+                    
+                    playerClient.playerState.xPos = Vector2Message.x;
+                    playerClient.playerState.yPos = Vector2Message.y;
+                    
+                    Console.WriteLine($"{playerClient.playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 default:
