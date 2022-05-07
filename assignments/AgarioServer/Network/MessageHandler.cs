@@ -47,7 +47,7 @@ public class MessageHandler
                     
                     playerClient.playerState.xPos = Vector2Message.x;
                     playerClient.playerState.yPos = Vector2Message.y;
-                    // Console.WriteLine($"{playerClient.playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
+                    Console.WriteLine($"{playerClient.playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 default:

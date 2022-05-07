@@ -37,8 +37,8 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         var randomStartPos = new Vector2Message()
         {
             messageName = MessagesEnum.Vector2Message,
-            x = random.Next(0, GameState.boardSizeX),
-            y = random.Next(0, GameState.boardSizeY)
+            x = random.Next(-GameState.boardSizeX/2, GameState.boardSizeX/2),
+            y = random.Next(-GameState.boardSizeY/2, GameState.boardSizeY/2)
 
         };
 
