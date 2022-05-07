@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Connection : MonoBehaviour
+public class Connection
 {
     [SerializeField]
     private TcpClient client;
@@ -14,10 +14,7 @@ public class Connection : MonoBehaviour
 
     public StreamWriter streamWriter;
 
-    private void Start()
-    {
-        DontDestroyOnLoad(this);
-    }
+    
 
     public async Task Init(TcpClient client, string playerName)
     {

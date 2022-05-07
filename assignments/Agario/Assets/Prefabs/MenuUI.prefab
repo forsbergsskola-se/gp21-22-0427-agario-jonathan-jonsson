@@ -667,7 +667,6 @@ GameObject:
   - component: {fileID: 7579160680353274366}
   - component: {fileID: 7579160680353274367}
   - component: {fileID: 7579160680353274360}
-  - component: {fileID: 23144711}
   m_Layer: 5
   m_Name: ConnectButton
   m_TagString: Untagged
@@ -778,9 +777,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 23144711}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StartGame, Assembly-CSharp
-        m_MethodName: Connect
+        m_MethodName: ConnectOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -790,20 +789,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &23144711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7579160680353274362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 232771aa9b5d5c645b51904560271ec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  connection: {fileID: 0}
-  nameField: {fileID: 128825317}
 --- !u!1 &7579160680619567223
 GameObject:
   m_ObjectHideFlags: 0

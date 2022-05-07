@@ -6,8 +6,10 @@ using Messages;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MessageHandler  
+public class MessageHandler : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerClient playerClient;
     
     public static async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
     {

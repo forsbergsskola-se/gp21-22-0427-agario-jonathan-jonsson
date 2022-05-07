@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using Messages;
 using UnityEngine;
 
-public class PositionSender : MonoBehaviour
+public class PositionTransmitter : MonoBehaviour
 {
     
-    [SerializeField]
-    private Connection connection;
- 
+[SerializeField] private PlayerClient playerClient;
+    
     private void Start()
     {
-        connection = FindObjectOfType<Connection>();
-  
+
         //TODO: IF current pos != stored pos on server:
         StartCoroutine(UpdatePosToServer());
     }
@@ -28,11 +26,11 @@ public class PositionSender : MonoBehaviour
                 x = transform.position.x,
                 y = transform.position.y
     
-
+    
             };
-            MessageHandler.SendMessageAsync(msg, connection.streamWriter);
-
-
+            MessageHandler.SendMessageAsync(msg, playerClient.connection.streamWriter);
+    
+    
         }
     }
 }
