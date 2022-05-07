@@ -46,6 +46,10 @@ public class MessageHandler : MonoBehaviour
                     // Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
+                case MessagesEnum.BoolMessage:
+                    var boolMessage = JsonUtility.FromJson<BoolMessage>(inputJson);
+                    playerClient.playerState.IllegalMovement = boolMessage.boolValue;
+                    break;
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");
             }

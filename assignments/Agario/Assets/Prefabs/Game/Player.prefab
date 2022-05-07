@@ -67,7 +67,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: DefaultName
   size: 0
-  speed: 500
+  playerSpeed: 1500
+  IllegalMovement: 0
   XPos: 0
   YPos: 0
 --- !u!114 &7089601653777172729

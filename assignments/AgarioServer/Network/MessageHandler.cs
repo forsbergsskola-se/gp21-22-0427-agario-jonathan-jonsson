@@ -43,11 +43,11 @@ public class MessageHandler
                     break;
 
                 case MessagesEnum.Vector2Message:
-                    var Vector2Message = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
-                    
-                    playerClient.playerState.xPos = Vector2Message.x;
-                    playerClient.playerState.yPos = Vector2Message.y;
-                    Console.WriteLine($"{playerClient.playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
+                    var playerPositionMessage = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
+                    playerClient.playerState.IllegalMovement= MovementLegality.EvaluateMovement(playerPositionMessage, playerClient);
+                    playerClient.playerState.xPos = Math.Clamp(playerPositionMessage.x, -50, 50);
+                    playerClient.playerState.yPos = Math.Clamp(playerPositionMessage.y, -50, 50);
+                    Console.WriteLine($"{playerClient.playerState.playerName} position: X={playerClient.playerState.xPos},Y={playerClient.playerState.yPos}");
                     break;
 
                 default:

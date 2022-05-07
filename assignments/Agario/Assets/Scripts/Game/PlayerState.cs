@@ -8,7 +8,8 @@ public class PlayerState : MonoBehaviour
 {
  public string playerName;
  public float size;
- public float speed;
+ public float playerSpeed;
+ public bool IllegalMovement;
  public float XPos;
  public float YPos;
 

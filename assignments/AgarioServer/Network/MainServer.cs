@@ -20,15 +20,29 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
             
             await  playerConnection.Init(tcpClient);
  
-            await SendWelcomeResponse(playerConnection);
-            Console.WriteLine("Send welcome response - Done");
-            await SendServerID(playerConnection);
-            Console.WriteLine("Send assigned ID - Done");
-
+            await SendWelcomeResponseandID(playerConnection);
+            Console.WriteLine("Send welcome response and ID - Done");
+      
             await AssignRandomStartPosition(playerConnection);
+            
+            new Task(()=>ContinuousBroadCaster(playerConnection)).Start();
 
         }
     }
+
+
+    public static async Task ContinuousBroadCaster(Connection playerConnection)
+    {
+        while (true)
+        {
+                SendIllegalPositionNotification(playerConnection);
+            
+            Thread.Sleep(15); // time between each broadcast
+        }
+    }
+    
+    
+    
 
     private static async Task AssignRandomStartPosition(Connection playerConnection)
     {
@@ -45,7 +59,7 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         await MessageHandler.SendMessageAsync(randomStartPos, playerConnection.streamWriter);
     }
 
-    public static async Task SendWelcomeResponse(Connection playerConnection)
+    public static async Task SendWelcomeResponseandID(Connection playerConnection)
     {
         var newStringMessage = new StringMessage()
         {
@@ -53,21 +67,33 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
             stringText = $"Welcome to the server! You have been assigned ID: {playerConnection.playerClient.playerServerId}"
 
         };
-        
-        await MessageHandler.SendMessageAsync(newStringMessage, playerConnection.streamWriter);
-    }
-
-    public static async Task SendServerID(Connection playerConnection)
-    {
         var serverIDMessage = new ServerIDAssignmentMessage
         {
             messageName = MessagesEnum.ServerIdAssignmentMessage,
             ID = playerConnection.playerClient.playerServerId
         };
+        await MessageHandler.SendMessageAsync(newStringMessage, playerConnection.streamWriter);
         await MessageHandler.SendMessageAsync(serverIDMessage, playerConnection.streamWriter);
- 
+
     }
 
+    public static async Task SendIllegalPositionNotification(Connection playerConnection)
+    {
+        var illegalMovementMessage = new BoolMessage()
+        {
+            messageName = MessagesEnum.BoolMessage,
+            boolValue = playerConnection.playerClient.playerState.IllegalMovement
+        };
+
+        var positionCorrection = new Vector2Message()
+        {
+            messageName = MessagesEnum.Vector2Message,
+            x = playerConnection.playerClient.playerState.xPos,
+            y = playerConnection.playerClient.playerState.yPos
+        };
+        await MessageHandler.SendMessageAsync(illegalMovementMessage, playerConnection.streamWriter);
+        await MessageHandler.SendMessageAsync(positionCorrection, playerConnection.streamWriter);
+    }
 
 }
 
