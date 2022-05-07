@@ -36,7 +36,10 @@ public class MessageHandler
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
                     break;
+                
                 case MessagesEnum.StringMessage:
+                    var stringMessage = JsonSerializer.Deserialize<StringMessage>(inputJson, options);
+                    Console.WriteLine(stringMessage.stringText);
                     break;
 
                 case MessagesEnum.Vector2Message:
@@ -44,8 +47,7 @@ public class MessageHandler
                     
                     playerClient.playerState.xPos = Vector2Message.x;
                     playerClient.playerState.yPos = Vector2Message.y;
-                    
-                    Console.WriteLine($"{playerClient.playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
+                    // Console.WriteLine($"{playerClient.playerState.playerName} position: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 default:

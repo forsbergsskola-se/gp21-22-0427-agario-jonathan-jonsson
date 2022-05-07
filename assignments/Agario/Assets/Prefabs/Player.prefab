@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: {fileID: 5006616481724121022}
   ServerID: 0
+  MessageHandler: {fileID: 8091553435789261518}
 --- !u!114 &5006616481724121022
 MonoBehaviour:
   m_ObjectHideFlags: 0

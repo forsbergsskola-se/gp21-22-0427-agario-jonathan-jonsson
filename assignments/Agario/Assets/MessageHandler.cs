@@ -11,13 +11,13 @@ public class MessageHandler : MonoBehaviour
     [SerializeField]
     private PlayerClient playerClient;
     
-    public static async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
+    public async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
     {
         await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
         await streamWriter.FlushAsync();
     }    
     
-    public static async Task ReadMessage(TcpClient client)
+    public async Task ReadMessage(TcpClient client)
     {
         var streamReader = new StreamReader(client.GetStream());
 
@@ -34,14 +34,16 @@ public class MessageHandler : MonoBehaviour
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
                     var serverIDAssignmentMessage = JsonUtility.FromJson<ServerIDAssignmentMessage>(inputJson);
-                    Debug.Log(serverIDAssignmentMessage.ID);
+                    playerClient.ServerID = serverIDAssignmentMessage.ID;
                     break;
                 case MessagesEnum.LogInMessage:
                     break;
 
                 case MessagesEnum.Vector2Message:
                     var Vector2Message = JsonUtility.FromJson<Vector2Message>(inputJson);
-                    Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
+                    playerClient.playerState.XPos = Vector2Message.x;
+                    playerClient.playerState.YPos = Vector2Message.y;
+                    // Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 default:

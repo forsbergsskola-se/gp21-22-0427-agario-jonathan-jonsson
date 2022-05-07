@@ -28,7 +28,8 @@ public class PositionTransmitter : MonoBehaviour
     
     
             };
-            MessageHandler.SendMessageAsync(msg, playerClient.connection.streamWriter);
+            
+            playerClient.MessageHandler.SendMessageAsync(msg, playerClient.streamWriter);
     
     
         }

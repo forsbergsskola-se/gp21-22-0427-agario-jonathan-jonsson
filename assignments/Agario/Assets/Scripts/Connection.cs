@@ -8,23 +8,20 @@ using UnityEngine;
 
 public class Connection
 {
-    [SerializeField]
-    private TcpClient client;
-    [SerializeField] public string playerName;
-
-    public StreamWriter streamWriter;
-
-    
-
-    public async Task Init(TcpClient client, string playerName)
-    {
-        this.client = client;
-        this.playerName = playerName;
-        streamWriter = new StreamWriter(client.GetStream());
-        new Task(()=>MessageHandler.ReadMessage(this.client)).Start();
-    }
-
-   
+    // [SerializeField]
+    // private TcpClient client;
+    // [SerializeField] public string playerName;
+    //
+    // public StreamWriter streamWriter;
+    //
+    //
+    //
+    // public async Task Init(TcpClient client, string playerName)
+    // {
+    //     
+    // }
+    //
+    //
 
 
 

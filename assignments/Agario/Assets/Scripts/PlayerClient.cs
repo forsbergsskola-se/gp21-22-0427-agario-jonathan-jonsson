@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -9,39 +11,49 @@ using UnityEngine.SceneManagement;
 public class PlayerClient : MonoBehaviour
 {
     private TcpClient playerTcpClient = new TcpClient();
-   [SerializeField] private PlayerState playerState;
-   public Connection connection;
+   [SerializeField] public PlayerState playerState;
     public int ServerID;
+    public MessageHandler MessageHandler;
+    public StreamWriter streamWriter;
     
     
+    private async Task PlayerSetup()
+    {
+       await Init();
+       SetStartPosition();
+
+    }
+
     private void Start()
     {
-        Init();
+        PlayerSetup();
+    }
+
+    private void SetStartPosition()
+    {
+        transform.position = new Vector3(playerState.XPos, playerState.YPos);
     }
 
     public async Task Init()
     {
-        connection = new Connection();
         var starGameData = FindObjectOfType<StartConnectionData>();
         playerState.playerName = starGameData.playerName;
         playerTcpClient = starGameData.TcpClient;
-        
-        await connection.Init(playerTcpClient,playerState.playerName);
-
-        await SendClientLogInMessage(connection);
+        streamWriter = new StreamWriter(playerTcpClient.GetStream());
+        new Task(()=>MessageHandler.ReadMessage(playerTcpClient)).Start();
+        await SendClientLogInMessage();
     }
 
-
-    //update data to server here!
-
-
-    private async Task SendClientLogInMessage(Connection connections)
+ 
+    private async Task SendClientLogInMessage()
     {
         var logInMessage = new LogInMessage
         {
             messageName = MessagesEnum.LogInMessage,
-            playerName = connections.playerName
+            playerName =  playerState.playerName
         };
-        await MessageHandler.SendMessageAsync(logInMessage, connections.streamWriter);
+        await MessageHandler.SendMessageAsync(logInMessage, streamWriter);
     }
+
+   
 }
