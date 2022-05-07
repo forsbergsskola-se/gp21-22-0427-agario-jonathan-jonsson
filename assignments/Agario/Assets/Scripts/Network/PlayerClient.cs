@@ -1,32 +1,26 @@
-using System;
 using System.IO;
-using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerClient : MonoBehaviour
 {
-    private TcpClient playerTcpClient = new TcpClient();
-   [SerializeField] public PlayerState playerState;
+    [SerializeField] public PlayerState playerState;
     public int ServerID;
     public MessageHandler MessageHandler;
+    private TcpClient playerTcpClient = new();
     public StreamWriter streamWriter;
-    
-    
-    private async Task PlayerSetup()
-    {
-       await Init();
-       SetStartPosition();
-
-    }
 
     private void Start()
     {
         PlayerSetup();
+    }
+
+
+    private async Task PlayerSetup()
+    {
+        await Init();
+        SetStartPosition();
     }
 
     private void SetStartPosition()
@@ -40,20 +34,18 @@ public class PlayerClient : MonoBehaviour
         playerState.playerName = starGameData.playerName;
         playerTcpClient = starGameData.TcpClient;
         streamWriter = new StreamWriter(playerTcpClient.GetStream());
-        new Task(()=>MessageHandler.ReadMessage(playerTcpClient)).Start();
+        new Task(() => MessageHandler.ReadMessage(playerTcpClient)).Start();
         await SendClientLogInMessage();
     }
 
- 
+
     private async Task SendClientLogInMessage()
     {
         var logInMessage = new LogInMessage
         {
             messageName = MessagesEnum.LogInMessage,
-            playerName =  playerState.playerName
+            playerName = playerState.playerName
         };
         await MessageHandler.SendMessageAsync(logInMessage, streamWriter);
     }
-
-   
 }

@@ -2,7 +2,7 @@
 
 namespace AgarioServer;
 
-public class playerClient
+public class PlayerClient
 {
     public PlayerState playerState;
     public int playerServerId;

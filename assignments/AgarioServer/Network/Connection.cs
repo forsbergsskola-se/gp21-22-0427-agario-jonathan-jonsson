@@ -5,13 +5,13 @@ namespace AgarioServer;
 
 public class Connection
 {
-    public playerClient playerClient;
+    public PlayerClient playerClient;
     public StreamWriter streamWriter;
     private static int id;
 
     public Connection()
     {
-        playerClient= new playerClient()
+        playerClient= new PlayerClient()
         {
             playerServerId = ++id,
             playerState = new PlayerState()

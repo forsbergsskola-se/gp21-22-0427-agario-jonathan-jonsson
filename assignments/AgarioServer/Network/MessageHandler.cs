@@ -16,7 +16,7 @@ public class MessageHandler
         await streamWriter.FlushAsync();
     }
     
-    public static async Task ReadMessage(playerClient playerClient)
+    public static async Task ReadMessage(PlayerClient playerClient)
     {
         var streamReader = new StreamReader(playerClient.playerTcpClient.GetStream());
        
