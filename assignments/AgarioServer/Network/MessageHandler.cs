@@ -5,7 +5,7 @@ namespace AgarioServer;
 
 public class MessageHandler
 {
-    static JsonSerializerOptions options = new JsonSerializerOptions()
+    static JsonSerializerOptions options = new ()
     {
         IncludeFields = true
     };
@@ -18,7 +18,7 @@ public class MessageHandler
     
     public static async Task ReadMessage(PlayerClient playerClient)
     {
-        var streamReader = new StreamReader(playerClient.playerTcpClient.GetStream());
+        var streamReader = new StreamReader(playerClient.PlayerTcpClient.GetStream());
        
         while (true)
         {
@@ -30,8 +30,8 @@ public class MessageHandler
             {
                 case MessagesEnum.LogInMessage:
                     var logInMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                    Console.WriteLine($"{logInMessage.playerName} ({playerClient.playerTcpClient.Client.RemoteEndPoint}) joined the server!");
-                    playerClient.playerState.playerName = logInMessage.playerName;
+                    Console.WriteLine($"{logInMessage.playerName} ({playerClient.PlayerTcpClient.Client.RemoteEndPoint}) joined the server!");
+                    playerClient.PlayerState.PlayerName = logInMessage.playerName;
  
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
@@ -44,10 +44,10 @@ public class MessageHandler
 
                 case MessagesEnum.Vector2Message:
                     var playerPositionMessage = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
-                    playerClient.playerState.IllegalMovement= MovementLegality.EvaluateMovement(playerPositionMessage, playerClient);
-                    playerClient.playerState.xPos = Math.Clamp(playerPositionMessage.x, -50, 50);
-                    playerClient.playerState.yPos = Math.Clamp(playerPositionMessage.y, -50, 50);
-                    Console.WriteLine($"{playerClient.playerState.playerName} position: X={playerClient.playerState.xPos},Y={playerClient.playerState.yPos}");
+                    playerClient.PlayerState.IllegalMovement= MovementLegality.EvaluateMovement(playerPositionMessage, playerClient);
+                    playerClient.PlayerState.XPos = Math.Clamp(playerPositionMessage.x, -GameState.BoardSizeX/2, GameState.BoardSizeX/2);
+                    playerClient.PlayerState.YPos = Math.Clamp(playerPositionMessage.y, -GameState.BoardSizeY/2, GameState.BoardSizeY/2);
+                    Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.XPos},Y={playerClient.PlayerState.YPos}");
                     break;
 
                 default:

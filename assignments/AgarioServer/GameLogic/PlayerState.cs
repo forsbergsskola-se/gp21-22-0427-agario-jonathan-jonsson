@@ -2,11 +2,11 @@
 
 public class PlayerState
 {
-    public string playerName;
-    public float size;
-    public float playerSpeed;
+    public string PlayerName;
+    public float Size;
+    public float PlayerSpeed;
     public bool IllegalMovement;
-    public float xPos;
-    public float yPos;
+    public float XPos;
+    public float YPos;
 
 }

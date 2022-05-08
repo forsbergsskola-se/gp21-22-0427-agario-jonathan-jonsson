@@ -4,9 +4,9 @@ namespace AgarioServer;
 
 public class PlayerClient
 {
-    public PlayerState playerState;
-    public int playerServerId;
-    public TcpClient playerTcpClient;
+    public PlayerState PlayerState;
+    public int PlayerServerId;
+    public TcpClient PlayerTcpClient;
     
     
     

@@ -76,7 +76,7 @@ MonoBehaviour:
   playerBroadcastData: {fileID: 578056144134748706}
   ServerID: 0
   MessageHandler: {fileID: 8091553435789261518}
-  UpdateLoopTime: 1
+  UpdateLoopTime: 0.05
 --- !u!114 &578056144134748706
 MonoBehaviour:
   m_ObjectHideFlags: 0
