@@ -4,10 +4,10 @@ public class MovementLegality
 {
     public static bool EvaluateMovement(Vector2Message playerPositionMessage, PlayerClient playerClient)
     {
-        if (!(playerPositionMessage.x > GameState.BoardSizeX / 2) &&
-            !(playerPositionMessage.x < -GameState.BoardSizeX / 2) &&
-            !(playerPositionMessage.y > GameState.BoardSizeY / 2) &&
-            !(playerPositionMessage.y < -GameState.BoardSizeY / 2))
+        if (!(playerPositionMessage.X > GameState.BoardSizeX / 2) &&
+            !(playerPositionMessage.X < -GameState.BoardSizeX / 2) &&
+            !(playerPositionMessage.Y > GameState.BoardSizeY / 2) &&
+            !(playerPositionMessage.Y < -GameState.BoardSizeY / 2))
             return false;
         
         

@@ -2,6 +2,6 @@
 
 public class StringMessage : Message
 {
-    public string stringText;
+    public string StringText;
  
 }

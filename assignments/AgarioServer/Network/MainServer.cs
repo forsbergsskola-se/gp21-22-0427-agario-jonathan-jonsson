@@ -43,9 +43,9 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
 
         var randomStartPos = new Vector2Message
         {
-            messageName = MessagesEnum.Vector2Message,
-            x = random.Next(-GameState.BoardSizeX / 2, GameState.BoardSizeX / 2),
-            y = random.Next(-GameState.BoardSizeY / 2, GameState.BoardSizeY / 2)
+            MessageName = MessagesEnum.Vector2Message,
+            X = random.Next(-GameState.BoardSizeX / 2, GameState.BoardSizeX / 2),
+            Y = random.Next(-GameState.BoardSizeY / 2, GameState.BoardSizeY / 2)
         };
 
         await MessageHandler.SendMessageAsync(randomStartPos, playerConnection.StreamWriter);
@@ -55,14 +55,14 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
     {
         var newStringMessage = new StringMessage
         {
-            messageName = MessagesEnum.StringMessage,
-            stringText =
+            MessageName = MessagesEnum.StringMessage,
+            StringText =
                 $"Welcome to the server! You have been assigned ID: {playerConnection.PlayerClient.PlayerServerId}"
         };
         var serverIDMessage = new ServerIDAssignmentMessage
         {
-            messageName = MessagesEnum.ServerIdAssignmentMessage,
-            ID = playerConnection.PlayerClient.PlayerServerId
+            MessageName = MessagesEnum.ServerIdAssignmentMessage,
+            Id = playerConnection.PlayerClient.PlayerServerId
         };
         await MessageHandler.SendMessageAsync(newStringMessage, playerConnection.StreamWriter);
         await MessageHandler.SendMessageAsync(serverIDMessage, playerConnection.StreamWriter);

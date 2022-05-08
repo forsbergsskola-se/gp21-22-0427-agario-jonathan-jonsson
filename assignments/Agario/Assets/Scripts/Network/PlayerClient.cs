@@ -11,7 +11,7 @@ public class PlayerClient : MonoBehaviour
     public int ServerID;
     public MessageHandler MessageHandler;
     private TcpClient playerTcpClient = new();
-    public StreamWriter streamWriter;
+    public StreamWriter StreamWriter;
     public float UpdateLoopTime;
 
     private void Start()
@@ -25,10 +25,10 @@ public class PlayerClient : MonoBehaviour
     private async Task PlayerSetup()
     {
         await Init();
-        SetStartPosition();
+        await SetStartPosition();
     }
 
-    private void SetStartPosition()
+    private async Task SetStartPosition()
     {
         transform.position = new Vector3(playerState.XPos, playerState.YPos);
     }
@@ -42,18 +42,13 @@ public class PlayerClient : MonoBehaviour
             yield return new WaitForSeconds(updateLoopTime);
         }
     }
-    
-    
-    
-    
-    
 
-    public async Task Init()
+    private async Task Init()
     {
-        var starGameData = FindObjectOfType<StartConnectionData>();
-        playerState.playerName = starGameData.playerName;
-        playerTcpClient = starGameData.TcpClient;
-        streamWriter = new StreamWriter(playerTcpClient.GetStream());
+        var startGameData = FindObjectOfType<StartConnectionData>(); //TODO: the whole transfer data via object that does not destroy on scenechange feels ugly. Fix - maybe SO?
+        playerState.PlayerName = startGameData.playerName;
+        playerTcpClient = startGameData.TcpClient;
+        StreamWriter = new StreamWriter(playerTcpClient.GetStream());
         new Task(() => MessageHandler.ReadMessage(playerTcpClient)).Start();
         await SendClientLogInMessage();
     }
@@ -63,9 +58,10 @@ public class PlayerClient : MonoBehaviour
     {
         var logInMessage = new LogInMessage
         {
-            messageName = MessagesEnum.LogInMessage,
-            playerName = playerState.playerName
+            MessageName = MessagesEnum.LogInMessage,
+            PlayerName = playerState.PlayerName
         };
-        await MessageHandler.SendMessageAsync(logInMessage, streamWriter);
+        
+        await MessageHandler.SendMessageAsync(logInMessage, StreamWriter);
     }
 }

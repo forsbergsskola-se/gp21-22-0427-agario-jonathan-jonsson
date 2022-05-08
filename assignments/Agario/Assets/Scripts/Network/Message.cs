@@ -1,10 +1,10 @@
 
 public class Message
 {
-    public MessagesEnum messageName;
+    public MessagesEnum MessageName;
 }
 
 public class Message<T> : Message
 {
-    public T value;
+    public T Value;
 }

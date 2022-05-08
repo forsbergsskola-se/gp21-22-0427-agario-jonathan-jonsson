@@ -3,7 +3,7 @@
     public class Vector2Message : Message
 
     {
-    public float x;
-    public float y;
+    public float X;
+    public float Y;
     }
 }

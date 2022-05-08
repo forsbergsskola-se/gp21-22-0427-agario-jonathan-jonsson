@@ -1,5 +1,5 @@
 
 public class BoolMessage : Message
 {
-    public bool boolValue; 
+    public bool BoolValue; 
 }

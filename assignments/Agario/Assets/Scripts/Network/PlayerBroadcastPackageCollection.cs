@@ -13,15 +13,16 @@ public class PlayerBroadcastPackageCollection : MonoBehaviour
     }
 
 
-    public async Task UpdatePosToServer()
+    private async Task UpdatePosToServer()
     {
+        var position = transform.position;
         var msg = new Vector2Message
         {
-            messageName = MessagesEnum.Vector2Message,
-            x = transform.position.x,
-            y = transform.position.y
+            MessageName = MessagesEnum.Vector2Message,
+            X = position.x,
+            Y = position.y
         };
 
-        playerClient.MessageHandler.SendMessageAsync(msg, playerClient.streamWriter);
+        await playerClient.MessageHandler.SendMessageAsync(msg, playerClient.StreamWriter);
     }
 }

@@ -26,29 +26,29 @@ public class MessageHandler : MonoBehaviour
             var inputJson = await streamReader.ReadLineAsync();
             var message = JsonUtility.FromJson<Message>(inputJson);
             
-            switch (message.messageName)
+            switch (message.MessageName)
             {
                 case MessagesEnum.StringMessage:
                     var stringMessage = JsonUtility.FromJson<StringMessage>(inputJson);
-                    Debug.Log(stringMessage.stringText);
+                    Debug.Log(stringMessage.StringText);
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
                     var serverIDAssignmentMessage = JsonUtility.FromJson<ServerIDAssignmentMessage>(inputJson);
-                    playerClient.ServerID = serverIDAssignmentMessage.ID;
+                    playerClient.ServerID = serverIDAssignmentMessage.Id;
                     break;
                 case MessagesEnum.LogInMessage:
                     break;
 
                 case MessagesEnum.Vector2Message:
-                    var Vector2Message = JsonUtility.FromJson<Vector2Message>(inputJson);
-                    playerClient.playerState.XPos = Vector2Message.x;
-                    playerClient.playerState.YPos = Vector2Message.y;
+                    var vector2Message = JsonUtility.FromJson<Vector2Message>(inputJson);
+                    playerClient.playerState.XPos = vector2Message.X;
+                    playerClient.playerState.YPos = vector2Message.Y;
                     // Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 case MessagesEnum.BoolMessage:
                     var boolMessage = JsonUtility.FromJson<BoolMessage>(inputJson);
-                    playerClient.playerState.IllegalMovement = boolMessage.boolValue;
+                    playerClient.playerState.IllegalMovement = boolMessage.BoolValue;
                     break;
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");

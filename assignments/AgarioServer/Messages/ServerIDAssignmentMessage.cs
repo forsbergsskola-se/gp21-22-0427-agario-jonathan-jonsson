@@ -2,5 +2,5 @@
 
 public class ServerIDAssignmentMessage : Message
 {
-    public int ID;
+    public int Id;
 }

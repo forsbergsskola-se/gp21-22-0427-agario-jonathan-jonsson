@@ -26,12 +26,12 @@ public class MessageHandler
            
             var message = JsonSerializer.Deserialize<Message>(inputJson, options);
             
-            switch (message.messageName)
+            switch (message.MessageName)
             {
                 case MessagesEnum.LogInMessage:
                     var logInMessage = JsonSerializer.Deserialize<LogInMessage>(inputJson, options);
-                    Console.WriteLine($"{logInMessage.playerName} ({playerClient.PlayerTcpClient.Client.RemoteEndPoint}) joined the server!");
-                    playerClient.PlayerState.PlayerName = logInMessage.playerName;
+                    Console.WriteLine($"{logInMessage.PlayerName} ({playerClient.PlayerTcpClient.Client.RemoteEndPoint}) joined the server!");
+                    playerClient.PlayerState.PlayerName = logInMessage.PlayerName;
  
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
@@ -39,15 +39,15 @@ public class MessageHandler
                 
                 case MessagesEnum.StringMessage:
                     var stringMessage = JsonSerializer.Deserialize<StringMessage>(inputJson, options);
-                    Console.WriteLine(stringMessage.stringText);
+                    Console.WriteLine(stringMessage.StringText);
                     break;
 
                 case MessagesEnum.Vector2Message:
                     var playerPositionMessage = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
                     playerClient.PlayerState.IllegalMovement= MovementLegality.EvaluateMovement(playerPositionMessage, playerClient);
-                    playerClient.PlayerState.XPos = Math.Clamp(playerPositionMessage.x, -GameState.BoardSizeX/2, GameState.BoardSizeX/2);
-                    playerClient.PlayerState.YPos = Math.Clamp(playerPositionMessage.y, -GameState.BoardSizeY/2, GameState.BoardSizeY/2);
-                    Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.XPos},Y={playerClient.PlayerState.YPos}");
+                    playerClient.PlayerState.XPos = Math.Clamp(playerPositionMessage.X, -GameState.BoardSizeX/2, GameState.BoardSizeX/2);
+                    playerClient.PlayerState.YPos = Math.Clamp(playerPositionMessage.Y, -GameState.BoardSizeY/2, GameState.BoardSizeY/2);
+                    // Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.XPos},Y={playerClient.PlayerState.YPos}");
                     break;
 
                 default:
