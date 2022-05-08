@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -5,15 +6,19 @@ using UnityEngine;
 
 public class PlayerClient : MonoBehaviour
 {
-    [SerializeField] public PlayerState playerState;
+    public PlayerState playerState;
+    [SerializeField] private PlayerBroadcastPackageCollection playerBroadcastData;
     public int ServerID;
     public MessageHandler MessageHandler;
     private TcpClient playerTcpClient = new();
     public StreamWriter streamWriter;
+    public float UpdateLoopTime;
 
     private void Start()
     {
         PlayerSetup();
+        StartCoroutine(UpdateLoop(UpdateLoopTime));
+
     }
 
 
@@ -27,6 +32,21 @@ public class PlayerClient : MonoBehaviour
     {
         transform.position = new Vector3(playerState.XPos, playerState.YPos);
     }
+
+    IEnumerator UpdateLoop(float updateLoopTime)
+    {
+        while (true)
+        {
+            //Update broadcasts
+            playerBroadcastData.PlayerBroadCastPackage();
+            yield return new WaitForSeconds(updateLoopTime);
+        }
+    }
+    
+    
+    
+    
+    
 
     public async Task Init()
     {

@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4570421140749189966}
+  - component: {fileID: 750542102270608391}
   - component: {fileID: -4082339178986723726}
+  - component: {fileID: 578056144134748706}
   - component: {fileID: 5006616481724121022}
   - component: {fileID: 7089601653777172729}
   - component: {fileID: 8091553435789261518}
   - component: {fileID: 5669043483629462158}
-  - component: {fileID: 750542102270608391}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -38,6 +39,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &750542102270608391
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570421140749189969}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &-4082339178986723726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,8 +73,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerState: {fileID: 5006616481724121022}
+  playerBroadcastData: {fileID: 578056144134748706}
   ServerID: 0
   MessageHandler: {fileID: 8091553435789261518}
+  UpdateLoopTime: 1
+--- !u!114 &578056144134748706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570421140749189969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf824b7fb0e21b488d4fe450d228795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerClient: {fileID: -4082339178986723726}
 --- !u!114 &5006616481724121022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,27 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb2d: {fileID: 750542102270608391}
   playerState: {fileID: 5006616481724121022}
---- !u!50 &750542102270608391
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4570421140749189969}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &4711931856446972573
 GameObject:
   m_ObjectHideFlags: 0
