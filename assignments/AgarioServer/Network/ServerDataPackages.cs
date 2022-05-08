@@ -3,27 +3,27 @@
 public class ServerDataPackages
 {
 
-    public static async Task SendServerDataPackages(Connection playerConnection)
+    public static async Task SendServerDataPackages(PlayerClient playerClient)
     {
-        await SendIllegalPositionNotification(playerConnection);
+        await SendIllegalPositionNotification(playerClient);
     }
     
-    public static async Task SendIllegalPositionNotification(Connection playerConnection)
+    public static async Task SendIllegalPositionNotification(PlayerClient playerClient)
     {
         var illegalMovementMessage = new BoolMessage()
         {
             MessageName = MessagesEnum.BoolMessage,
-            BoolValue = playerConnection.PlayerClient.PlayerState.IllegalMovement
+            BoolValue = playerClient.PlayerState.IllegalMovement
         };
 
         var positionCorrection = new Vector2Message()
         {
             MessageName = MessagesEnum.Vector2Message,
-            X = playerConnection.PlayerClient.PlayerState.XPos,
-            Y = playerConnection.PlayerClient.PlayerState.YPos
+            X = playerClient.PlayerState.XPos,
+            Y = playerClient.PlayerState.YPos
         };
         
-        await MessageHandler.SendMessageAsync(illegalMovementMessage, playerConnection.StreamWriter);
-        await MessageHandler.SendMessageAsync(positionCorrection, playerConnection.StreamWriter);
+        await MessageHandler.SendMessageAsync(illegalMovementMessage, playerClient.StreamWriter);
+        await MessageHandler.SendMessageAsync(positionCorrection, playerClient.StreamWriter);
     }
 }

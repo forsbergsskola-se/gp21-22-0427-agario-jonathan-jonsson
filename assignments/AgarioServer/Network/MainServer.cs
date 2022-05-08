@@ -4,6 +4,8 @@ using AgarioServer;
 
 public class MainServer //TODO: name??? atm only entry point for player connection and starting player init
 {
+    private static PlayerClient playerClient;
+    private static int id;
     private static async Task Main()
     {
         var endpoint = new IPEndPoint(IPAddress.Loopback, 1313);
@@ -14,30 +16,45 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         {
             Console.WriteLine("Awaiting connection...");
             var tcpClient = await tcpListener.AcceptTcpClientAsync();
-            var playerConnection = new Connection();
-
-            await playerConnection.Init(tcpClient);
-
-            await SendWelcomeResponseandID(playerConnection);
-            Console.WriteLine("Send welcome response and ID - Done");
-
-            await AssignRandomStartPosition(playerConnection);
-
-            new Task(() => ContinuousBroadCaster(playerConnection)).Start();
+            
+            await SetUpPlayerClient(tcpClient);
         }
     }
 
-    private static async Task ContinuousBroadCaster(Connection playerConnection)
+    private static async Task SetUpPlayerClient(TcpClient tcpClient)
+    {
+        playerClient = new PlayerClient()
+        {
+            PlayerServerId = ++id,
+            PlayerState = new PlayerState(),
+            StreamWriter = new StreamWriter(tcpClient.GetStream())
+            {
+                AutoFlush = true
+            }
+        };
+        playerClient.PlayerTcpClient = tcpClient;
+
+        new Task(() => MessageHandler.ReadMessage(playerClient)).Start();
+
+        await SendWelcomeResponseandID(playerClient);
+        Console.WriteLine("Send welcome response and ID - Done");
+
+        await AssignRandomStartPosition(playerClient);
+
+        new Task(() => ContinuousBroadCaster(playerClient)).Start();
+    }
+
+    private static async Task ContinuousBroadCaster(PlayerClient playerClient)
     {
         while (true)
         {
-            await ServerDataPackages.SendServerDataPackages(playerConnection);
+            await ServerDataPackages.SendServerDataPackages(playerClient);
 
             Thread.Sleep(15); // time between each broadcast
         }
     }
 
-    private static async Task AssignRandomStartPosition(Connection playerConnection)
+    private static async Task AssignRandomStartPosition(PlayerClient playerClient)
     {
         var random = new Random();
 
@@ -48,23 +65,23 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
             Y = random.Next(-GameState.BoardSizeY / 2, GameState.BoardSizeY / 2)
         };
 
-        await MessageHandler.SendMessageAsync(randomStartPos, playerConnection.StreamWriter);
+        await MessageHandler.SendMessageAsync(randomStartPos, playerClient.StreamWriter);
     }
 
-    private static async Task SendWelcomeResponseandID(Connection playerConnection)
+    private static async Task SendWelcomeResponseandID(PlayerClient playerClient)
     {
         var newStringMessage = new StringMessage
         {
             MessageName = MessagesEnum.StringMessage,
             StringText =
-                $"Welcome to the server! You have been assigned ID: {playerConnection.PlayerClient.PlayerServerId}"
+                $"Welcome to the server! You have been assigned ID: {playerClient.PlayerServerId}"
         };
         var serverIDMessage = new ServerIDAssignmentMessage
         {
             MessageName = MessagesEnum.ServerIdAssignmentMessage,
-            Id = playerConnection.PlayerClient.PlayerServerId
+            Id = playerClient.PlayerServerId
         };
-        await MessageHandler.SendMessageAsync(newStringMessage, playerConnection.StreamWriter);
-        await MessageHandler.SendMessageAsync(serverIDMessage, playerConnection.StreamWriter);
+        await MessageHandler.SendMessageAsync(newStringMessage, playerClient.StreamWriter);
+        await MessageHandler.SendMessageAsync(serverIDMessage, playerClient.StreamWriter);
     }
 }

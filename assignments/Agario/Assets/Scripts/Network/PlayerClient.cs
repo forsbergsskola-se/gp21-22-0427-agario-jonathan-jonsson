@@ -21,7 +21,6 @@ public class PlayerClient : MonoBehaviour
 
     }
 
-
     private async Task PlayerSetup()
     {
         await Init();
