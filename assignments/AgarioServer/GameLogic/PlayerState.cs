@@ -2,7 +2,7 @@
 
 public class PlayerState
 {
-    public string PlayerName;
+    public string? PlayerName;
     public float Size;
     public float PlayerSpeed;
     public bool IllegalMovement;

@@ -50,6 +50,8 @@ public class MessageHandler
                     // Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.XPos},Y={playerClient.PlayerState.YPos}");
                     break;
 
+                case MessagesEnum.BoolMessage:
+                    break;
                 default:
                     throw new Exception("ERROR: Specific message not found on server!");
             }
