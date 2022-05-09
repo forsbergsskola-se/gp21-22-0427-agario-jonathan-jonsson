@@ -54,6 +54,7 @@ public class MessageHandler : MonoBehaviour
                     var spawnOrbMessage = JsonUtility.FromJson<SpawnOrbMessage>(inputJson);
                     mainClient.OrbSpawner.X = spawnOrbMessage.X;
                     mainClient.OrbSpawner.Y = spawnOrbMessage.Y;
+                    // mainClient.OrbSpawner.SpawnOrb(); //TODO: alot of direct references through main client................ maybe do differently...?
                     Debug.Log($"Spawning orb at: { mainClient.OrbSpawner.X},{mainClient.OrbSpawner.Y}");
                     break;
                 

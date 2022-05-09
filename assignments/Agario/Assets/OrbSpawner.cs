@@ -1,4 +1,5 @@
  
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class OrbSpawner : MonoBehaviour
@@ -7,12 +8,10 @@ public class OrbSpawner : MonoBehaviour
     public float X;
     public float Y;
 
-    
-    
-    // public void SpawnOrb()
-    // {
-    //     Instantiate(orb, new Vector2(X, Y), Quaternion.identity);
-    // }
+    public void SpawnOrb()
+    {
+        Instantiate(orb, new Vector3(X, Y,0), Quaternion.identity);
+    }
     
     
      

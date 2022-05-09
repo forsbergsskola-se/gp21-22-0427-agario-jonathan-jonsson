@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Net.Sockets;
@@ -65,5 +66,11 @@ public class MainClient : MonoBehaviour
         };
         
         await MessageHandler.SendMessageAsync(logInMessage, StreamWriter);
+    }
+
+    private void OnApplicationQuit()
+    {
+        playerTcpClient.Close();
+        
     }
 }
