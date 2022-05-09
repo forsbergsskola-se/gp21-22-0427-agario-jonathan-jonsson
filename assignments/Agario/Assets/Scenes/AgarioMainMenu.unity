@@ -201,25 +201,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &538938210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8848751404505264307, guid: 13f547db3e8b6dc4c87f1693a78e41dd, type: 3}
+--- !u!114 &538938212 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 538938212, guid: 13f547db3e8b6dc4c87f1693a78e41dd, type: 3}
   m_PrefabInstance: {fileID: 8848751404798415941}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &538938212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538938210}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 896db7698b7c50e479752dc5ba740a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameInput: {fileID: 128825317}
-  playerName: 
 --- !u!1 &1872341898
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +412,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 538938212, guid: 13f547db3e8b6dc4c87f1693a78e41dd, type: 3}
+      propertyPath: nameInput
+      value: 
+      objectReference: {fileID: 128825317}
     - target: {fileID: 8848751404505264307, guid: 13f547db3e8b6dc4c87f1693a78e41dd, type: 3}
       propertyPath: m_Name
       value: Client
@@ -468,6 +464,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3396375895292212328, guid: 13f547db3e8b6dc4c87f1693a78e41dd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f547db3e8b6dc4c87f1693a78e41dd, type: 3}

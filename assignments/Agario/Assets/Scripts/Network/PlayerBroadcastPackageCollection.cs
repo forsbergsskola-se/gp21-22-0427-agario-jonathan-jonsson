@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBroadcastPackageCollection : MonoBehaviour
 {
-    [SerializeField] private PlayerClient playerClient;
+    [SerializeField] private MainClient mainClient;
 
 
     public async Task PlayerBroadCastPackage()
@@ -15,7 +15,7 @@ public class PlayerBroadcastPackageCollection : MonoBehaviour
 
     private async Task UpdatePosToServer()
     {
-        var position = transform.position;
+        var position = mainClient.playerState.transform.position;
         var msg = new Vector2Message
         {
             MessageName = MessagesEnum.Vector2Message,
@@ -23,6 +23,6 @@ public class PlayerBroadcastPackageCollection : MonoBehaviour
             Y = position.y
         };
 
-        await playerClient.MessageHandler.SendMessageAsync(msg, playerClient.StreamWriter);
+        await mainClient.MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine;
 public class MessageHandler : MonoBehaviour
 {
     [SerializeField]
-    private PlayerClient playerClient;
+    private MainClient mainClient;
     
     public async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
     {
@@ -34,21 +34,21 @@ public class MessageHandler : MonoBehaviour
                     break;
                 case MessagesEnum.ServerIdAssignmentMessage:
                     var serverIDAssignmentMessage = JsonUtility.FromJson<ServerIDAssignmentMessage>(inputJson);
-                    playerClient.ServerID = serverIDAssignmentMessage.Id;
+                    mainClient.ServerID = serverIDAssignmentMessage.Id;
                     break;
                 case MessagesEnum.LogInMessage:
                     break;
 
                 case MessagesEnum.Vector2Message:
                     var vector2Message = JsonUtility.FromJson<Vector2Message>(inputJson);
-                    playerClient.playerState.XPos = vector2Message.X;
-                    playerClient.playerState.YPos = vector2Message.Y;
+                    mainClient.playerState.XPos = vector2Message.X;
+                    mainClient.playerState.YPos = vector2Message.Y;
                     // Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
                     break;
 
                 case MessagesEnum.BoolMessage:
                     var boolMessage = JsonUtility.FromJson<BoolMessage>(inputJson);
-                    playerClient.playerState.IllegalMovement = boolMessage.BoolValue;
+                    mainClient.playerState.IllegalMovement = boolMessage.BoolValue;
                     break;
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");

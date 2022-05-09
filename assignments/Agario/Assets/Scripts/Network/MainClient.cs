@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerClient : MonoBehaviour
+public class MainClient : MonoBehaviour
 {
     public PlayerState playerState;
     [SerializeField] private PlayerBroadcastPackageCollection playerBroadcastData;
