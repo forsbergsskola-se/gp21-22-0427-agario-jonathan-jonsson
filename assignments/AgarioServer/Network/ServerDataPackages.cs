@@ -5,10 +5,11 @@ public class ServerDataPackages
 
     public static async Task SendServerDataPackages(PlayerClient playerClient)
     {
+        
         await SendIllegalPositionNotification(playerClient);
     }
-    
-    public static async Task SendIllegalPositionNotification(PlayerClient playerClient)
+
+    private static async Task SendIllegalPositionNotification(PlayerClient playerClient)
     {
         var illegalMovementMessage = new BoolMessage()
         {
@@ -22,8 +23,9 @@ public class ServerDataPackages
             X = playerClient.PlayerState.XPos,
             Y = playerClient.PlayerState.YPos
         };
-        
+
         await MessageHandler.SendMessageAsync(illegalMovementMessage, playerClient.StreamWriter);
         await MessageHandler.SendMessageAsync(positionCorrection, playerClient.StreamWriter);
     }
+    
 }

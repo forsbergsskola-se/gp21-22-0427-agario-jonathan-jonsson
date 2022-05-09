@@ -40,10 +40,21 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         Console.WriteLine("Send welcome response and ID - Done");
 
         await AssignRandomStartPosition(playerClient);
-
+        
+        new Task(() => OrbTicker(playerClient)).Start();
         new Task(() => ContinuousBroadCaster(playerClient)).Start();
     }
 
+    private static async Task OrbTicker(PlayerClient playerClient)
+    {
+        while (true)
+        {
+            await OrbSpawner.SpawnOrb(playerClient);
+            Thread.Sleep(3000);
+        }
+    }
+    
+    
     private static async Task ContinuousBroadCaster(PlayerClient playerClient)
     {
         while (true)

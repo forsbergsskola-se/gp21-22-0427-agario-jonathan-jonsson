@@ -145,6 +145,10 @@ PrefabInstance:
       propertyPath: playerState
       value: 
       objectReference: {fileID: 1748411419}
+    - target: {fileID: 876463697, guid: ec56d30e5c51b184685bcf19a29e14b9, type: 3}
+      propertyPath: orb
+      value: 
+      objectReference: {fileID: 3586933127046210017, guid: 7af57bf25617dc247bf777f95caeb2cb, type: 3}
     - target: {fileID: 4570421140749189966, guid: ec56d30e5c51b184685bcf19a29e14b9, type: 3}
       propertyPath: m_RootOrder
       value: 1

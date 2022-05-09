@@ -7,6 +7,7 @@ using UnityEngine;
 public class MainClient : MonoBehaviour
 {
     public PlayerState playerState;
+    public OrbSpawner OrbSpawner;
     [SerializeField] private PlayerBroadcastPackageCollection playerBroadcastData;
     public int ServerID;
     public MessageHandler MessageHandler;
@@ -16,21 +17,23 @@ public class MainClient : MonoBehaviour
 
     private void Start()
     {
+        SpawnPlayer();
         PlayerSetup();
         StartCoroutine(UpdateLoop(UpdateLoopTime));
 
     }
 
+    private void SpawnPlayer()
+    {
+        //Implement new message getting start coords and instantiate player here
+    }
+
     private async Task PlayerSetup()
     {
         await Init();
-        await SetStartPosition();
     }
 
-    private async Task SetStartPosition()
-    {
-        transform.position = new Vector3(playerState.XPos, playerState.YPos);
-    }
+ 
 
     IEnumerator UpdateLoop(float updateLoopTime)
     {

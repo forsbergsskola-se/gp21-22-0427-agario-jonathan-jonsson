@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using Messages;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,8 +9,8 @@ public class MessageHandler : MonoBehaviour
 {
     [SerializeField]
     private MainClient mainClient;
-    
-    public async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
+
+    public static async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
     {
         await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
         await streamWriter.FlushAsync();
@@ -50,6 +49,14 @@ public class MessageHandler : MonoBehaviour
                     var boolMessage = JsonUtility.FromJson<BoolMessage>(inputJson);
                     mainClient.playerState.IllegalMovement = boolMessage.BoolValue;
                     break;
+                
+                case MessagesEnum.SpawnOrbMessage:
+                    var spawnOrbMessage = JsonUtility.FromJson<SpawnOrbMessage>(inputJson);
+                    mainClient.OrbSpawner.X = spawnOrbMessage.X;
+                    mainClient.OrbSpawner.Y = spawnOrbMessage.Y;
+                    Debug.Log($"Spawning orb at: { mainClient.OrbSpawner.X},{mainClient.OrbSpawner.Y}");
+                    break;
+                
                 default:
                     throw new Exception("ERROR: Message class not found when reading data from server!");
             }

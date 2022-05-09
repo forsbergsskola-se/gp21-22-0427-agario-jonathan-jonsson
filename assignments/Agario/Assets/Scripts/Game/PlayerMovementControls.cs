@@ -15,7 +15,7 @@ public class PlayerMovementControls : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (playerState.IllegalMovement)
+        if (playerState.IllegalMovement) // if player try to move outside map --> illegal state sent by server --> position corrected from server here
         {
             transform.position = new Vector2(playerState.XPos, playerState.YPos);
             Debug.Log($"Trying to exit board. Server corrected position to: {transform.position} ({playerState.XPos},{playerState.YPos})");

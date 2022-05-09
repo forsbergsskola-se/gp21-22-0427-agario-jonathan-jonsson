@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Messages;
 using UnityEngine;
 
 public class PlayerBroadcastPackageCollection : MonoBehaviour
@@ -23,6 +22,6 @@ public class PlayerBroadcastPackageCollection : MonoBehaviour
             Y = position.y
         };
 
-        await mainClient.MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
+        await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
     }
 }
