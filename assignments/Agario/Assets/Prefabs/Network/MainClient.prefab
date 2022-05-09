@@ -47,6 +47,7 @@ MonoBehaviour:
   orb: {fileID: 3586933127046210017, guid: 7af57bf25617dc247bf777f95caeb2cb, type: 3}
   X: 0
   Y: 0
+  msgHandler: {fileID: 8091553435789261518}
 --- !u!1 &4570421140749189969
 GameObject:
   m_ObjectHideFlags: 0

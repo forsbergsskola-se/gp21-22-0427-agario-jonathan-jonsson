@@ -1,0 +1,36 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ExecuteOnMainThread : MonoBehaviour
+{
+    //Singleton for executing on main thread
+    public static ExecuteOnMainThread Instance;
+    private Queue<Action> actions = new Queue<Action>();
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        actions.Enqueue(action);
+    }
+
+    private void Update()
+    {
+        while (actions.Count > 0)
+        {
+            actions.Dequeue()?.Invoke();
+        }
+    }
+}
