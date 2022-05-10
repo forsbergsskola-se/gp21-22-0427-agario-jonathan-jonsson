@@ -1,22 +1,23 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using AgarioServer.Messages;
 using AgarioServer.Model;
+using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 
 namespace AgarioServer.Network;
 
 public class MainServer
 {
     //Dictionary<Id,playerClient>
-    
+    private static Dictionary<int, PlayerClient> connectedPlayerClients;
     private static PlayerClient playerClient;
-    private static int id;
+    private static int id { get; set; }
     private static async Task Main()
     {
         var endpoint = new IPEndPoint(IPAddress.Loopback, 1313);
         var tcpListener = new TcpListener(endpoint);
         tcpListener.Start();
-
+        connectedPlayerClients = new Dictionary<int, PlayerClient>();
         while (true)
         {
             Console.WriteLine("Awaiting connection...");
@@ -26,14 +27,15 @@ public class MainServer
         }
     }
     
-    //TODO: add TCP client to playerClient
+ 
     private static async Task SetUpPlayerClient(TcpClient tcpClient)
     {
         playerClient = new PlayerClient(tcpClient,++id);
-        
+
+        connectedPlayerClients.Add(id,playerClient);
+
         await SendWelcomeResponseandID(playerClient);
         Console.WriteLine("Send welcome response and ID - Done");
-
         new Task(() => OrbTicker(playerClient)).Start();
         new Task(() => ContinuousBroadCaster(playerClient)).Start();
     }

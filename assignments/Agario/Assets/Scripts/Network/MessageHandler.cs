@@ -2,14 +2,15 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using AgarioShared.Network.Messages;
+using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 using Game;
 using Network;
 using UnityEngine;
 
 namespace AgarioShared.Network
 {
-    public class MessageHandler : MonoBehaviour
+    public class MessageHandler : MonoBehaviour //TODO: not dependent on MB and move to sharedCode
     {
 
         public Action OnSpawnOrb;

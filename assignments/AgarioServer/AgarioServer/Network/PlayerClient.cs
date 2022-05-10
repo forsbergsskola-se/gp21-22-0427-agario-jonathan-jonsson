@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using AgarioServer.Model;
+using Assets.Scripts.AgarioShared.Model;
 
 namespace AgarioServer.Network;
 
@@ -22,5 +23,6 @@ public class PlayerClient
         
         new Task(() => MessageHandler.ReadMessage(this)).Start();
         
+        //TODO: Send startdata to client
     }
 }

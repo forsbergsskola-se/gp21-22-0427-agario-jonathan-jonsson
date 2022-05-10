@@ -1,4 +1,6 @@
-﻿namespace AgarioServer.Network;
+﻿using Assets.Scripts.AgarioShared.Network;
+
+namespace AgarioServer.Network;
 
 public class Message
 {

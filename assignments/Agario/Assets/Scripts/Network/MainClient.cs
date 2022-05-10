@@ -2,9 +2,10 @@ using System.Collections;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using AgarioShared.Model;
 using AgarioShared.Network;
-using AgarioShared.Network.Messages;
+using Assets.Scripts.AgarioShared.Model;
+using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 using Game;
 using UnityEngine;
 

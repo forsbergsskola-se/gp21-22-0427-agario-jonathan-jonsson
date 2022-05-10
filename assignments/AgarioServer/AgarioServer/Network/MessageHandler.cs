@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
-using AgarioServer.Messages;
 using AgarioServer.Model;
+using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 
 namespace AgarioServer.Network;
 
@@ -26,7 +27,7 @@ public class MessageHandler
         {
             var inputJson = await streamReader.ReadLineAsync();
            
-            var message = JsonSerializer.Deserialize<Message>(inputJson, options);
+            var message = JsonSerializer.Deserialize<Assets.Scripts.AgarioShared.Network.Message>(inputJson, options);
             
             switch (message.MessageName)
             {
@@ -46,12 +47,12 @@ public class MessageHandler
 
                 case MessagesEnum.Vector2Message:
                     var playerPositionMessage = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
-                    
+
+                    Console.WriteLine(playerPositionMessage.X +" " +playerPositionMessage.Y);
                     playerClient.PlayerState.IllegalMovement= MovementLegality.EvaluateMovement(playerPositionMessage, playerClient);
-                    
-                    playerClient.PlayerState.XPos = Math.Clamp(playerPositionMessage.X, -GameState.BoardSizeX/2, GameState.BoardSizeX/2);
-                    playerClient.PlayerState.YPos = Math.Clamp(playerPositionMessage.Y, -GameState.BoardSizeY/2, GameState.BoardSizeY/2);
-                    // Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.XPos},Y={playerClient.PlayerState.YPos}");
+                    playerClient.PlayerState.ServerXPos = Math.Clamp(playerPositionMessage.X, -GameState.BoardSizeX/2, GameState.BoardSizeX/2);
+                    playerClient.PlayerState.ServerYPos = Math.Clamp(playerPositionMessage.Y, -GameState.BoardSizeY/2, GameState.BoardSizeY/2);
+                    // Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.ServerXPos},Y={playerClient.PlayerState.ServerYPos}");
                     break;
 
                 case MessagesEnum.BoolMessage:

@@ -1,4 +1,5 @@
-﻿using AgarioServer.Messages;
+﻿using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 
 namespace AgarioServer.Network;
 
@@ -22,8 +23,8 @@ public class ServerDataPackages
         var positionCorrection = new Vector2Message()
         {
             MessageName = MessagesEnum.Vector2Message,
-            X = playerClient.PlayerState.XPos,
-            Y = playerClient.PlayerState.YPos
+            X = playerClient.PlayerState.ServerXPos,
+            Y = playerClient.PlayerState.ServerXPos
         };
 
         await MessageHandler.SendMessageAsync(illegalMovementMessage, playerClient.StreamWriter);

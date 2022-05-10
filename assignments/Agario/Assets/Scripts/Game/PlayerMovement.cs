@@ -1,4 +1,4 @@
-using AgarioShared.Model;
+using Assets.Scripts.AgarioShared.Model;
 using Network;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace Game
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D rb2d;
-        [SerializeField] private PlayerState playerState => FindObjectOfType<MainClient>().playerState;
+         private PlayerState playerState => FindObjectOfType<MainClient>().playerState;
 
         private float horizontal;
         private float vertical;

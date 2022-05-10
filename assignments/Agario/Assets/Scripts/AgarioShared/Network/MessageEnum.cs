@@ -1,4 +1,4 @@
-namespace AgarioShared.Network
+namespace Assets.Scripts.AgarioShared.Network
 {
     public enum MessagesEnum
     {

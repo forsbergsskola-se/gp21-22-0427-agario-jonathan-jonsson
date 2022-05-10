@@ -1,5 +1,5 @@
 ﻿
-    namespace AgarioShared.Network.Messages
+    namespace Assets.Scripts.AgarioShared.Network.Messages
     {
         public class Vector2Message : Message
 

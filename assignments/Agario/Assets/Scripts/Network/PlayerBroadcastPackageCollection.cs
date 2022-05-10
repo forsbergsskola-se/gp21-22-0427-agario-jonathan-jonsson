@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using AgarioShared.Network;
-using AgarioShared.Network.Messages;
+using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 using UnityEngine;
 
 namespace Network
@@ -25,7 +26,7 @@ namespace Network
                 X = currentPlayerPosition.X,
                 Y = currentPlayerPosition.Y
             };
-
+            Debug.Log(msg.X + " " +msg.Y);
             await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
         }
     }

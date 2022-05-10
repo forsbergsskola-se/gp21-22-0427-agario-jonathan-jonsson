@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace AgarioShared.Model
+namespace Assets.Scripts.AgarioShared.Model
 {
     public class PlayerState
     {
