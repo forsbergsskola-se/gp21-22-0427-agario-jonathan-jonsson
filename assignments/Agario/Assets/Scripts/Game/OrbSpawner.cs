@@ -9,7 +9,7 @@ namespace Game
         public float X;
         public float Y;
 
-        [SerializeField]    private MessageHandler msgHandler;
+        [SerializeField] private MessageHandler msgHandler;
     
         private void OnEnable()
         {
@@ -23,12 +23,7 @@ namespace Game
 
         public void SpawnOrb()
         {
-            Debug.Log("Help");
             Instantiate(orb, new Vector3(X, Y,0), Quaternion.identity);
-            Debug.Log("Plz");
         }
-    
-     
-    
     }
 }

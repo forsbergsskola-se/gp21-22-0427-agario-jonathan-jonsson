@@ -67,7 +67,7 @@ namespace AgarioShared.Network
                         // mainClient.OrbSpawner.SpawnOrb();
                         // 2) OnSpawnOrb?.Invoke();
 
-                        ExecuteOnMainThread.Instance.ExecuteAction(OnSpawnOrb);
+                        ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnSpawnOrb);
                     
                     
                         Debug.Log($"Spawning orb at: {mainClient.OrbSpawner.X},{mainClient.OrbSpawner.Y}");

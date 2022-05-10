@@ -22,7 +22,7 @@ namespace Game
             }
         }
 
-        public void ExecuteAction(Action action)
+        public void ExecuteActionOnMainThread(Action action)
         {
             actions.Enqueue(action);
         }

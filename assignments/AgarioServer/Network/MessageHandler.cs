@@ -15,12 +15,7 @@ public class MessageHandler
     {
         await streamWriter.WriteLineAsync(JsonSerializer.Serialize(message, options));
         await streamWriter.FlushAsync();
-        
-        // if (message.ToString().Contains("SpawnOrbMessage"))
-        // {
-        //     Console.WriteLine($"Message sent: {message}");
-        //     
-        // }
+ 
     }
     
     public static async Task ReadMessage(PlayerClient playerClient)
