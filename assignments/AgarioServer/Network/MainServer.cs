@@ -29,24 +29,11 @@ public class MainServer
     //TODO: add TCP client to playerClient
     private static async Task SetUpPlayerClient(TcpClient tcpClient)
     {
-        playerClient = new PlayerClient()
-        {
-            PlayerServerId = ++id,
-            PlayerState = new PlayerState(),
-            StreamWriter = new StreamWriter(tcpClient.GetStream())
-            {
-                AutoFlush = true
-            }
-        };
-        playerClient.PlayerTcpClient = tcpClient;
-
-        new Task(() => MessageHandler.ReadMessage(playerClient)).Start();
-
+        playerClient = new PlayerClient(tcpClient,++id);
+        
         await SendWelcomeResponseandID(playerClient);
         Console.WriteLine("Send welcome response and ID - Done");
 
-        await AssignRandomStartPosition(playerClient);
-        
         new Task(() => OrbTicker(playerClient)).Start();
         new Task(() => ContinuousBroadCaster(playerClient)).Start();
     }
@@ -70,19 +57,6 @@ public class MainServer
         }
     }
 
-    private static async Task AssignRandomStartPosition(PlayerClient playerClient)
-    {
-        var random = new Random();
-
-        var randomStartPos = new Vector2Message
-        {
-            MessageName = MessagesEnum.Vector2Message,
-            X = random.Next(-GameState.BoardSizeX / 2, GameState.BoardSizeX / 2),
-            Y = random.Next(-GameState.BoardSizeY / 2, GameState.BoardSizeY / 2)
-        };
-
-        await MessageHandler.SendMessageAsync(randomStartPos, playerClient.StreamWriter);
-    }
 
     private static async Task SendWelcomeResponseandID(PlayerClient playerClient)
     {
