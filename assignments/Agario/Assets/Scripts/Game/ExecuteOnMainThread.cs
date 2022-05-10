@@ -8,7 +8,7 @@ namespace Game
     {
         //Singleton for executing on main thread
         public static ExecuteOnMainThread Instance;
-        private Queue<Action> actions = new Queue<Action>();
+        private Queue<Action> actions = new();
 
         private void Awake()
         {

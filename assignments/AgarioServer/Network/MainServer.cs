@@ -5,8 +5,10 @@ using AgarioServer.Model;
 
 namespace AgarioServer.Network;
 
-public class MainServer //TODO: name??? atm only entry point for player connection and starting player init
+public class MainServer
 {
+    //Dictionary<Id,playerClient>
+    
     private static PlayerClient playerClient;
     private static int id;
     private static async Task Main()
@@ -23,7 +25,8 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
             await SetUpPlayerClient(tcpClient);
         }
     }
-
+    
+    //TODO: add TCP client to playerClient
     private static async Task SetUpPlayerClient(TcpClient tcpClient)
     {
         playerClient = new PlayerClient()
@@ -53,7 +56,7 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         while (true)
         {
             await OrbSpawner.SpawnOrb(playerClient);
-            Thread.Sleep(3000);
+            await Task.Delay(3000);
         }
     }
     
@@ -63,8 +66,7 @@ public class MainServer //TODO: name??? atm only entry point for player connecti
         while (true)
         {
             await ServerDataPackages.SendServerDataPackages(playerClient);
-
-            Thread.Sleep(15); // time between each broadcast
+            await Task.Delay(15);
         }
     }
 

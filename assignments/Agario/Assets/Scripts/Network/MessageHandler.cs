@@ -47,8 +47,8 @@ namespace AgarioShared.Network
 
                     case MessagesEnum.Vector2Message:
                         var vector2Message = JsonUtility.FromJson<Vector2Message>(inputJson);
-                        mainClient.playerState.XPos = vector2Message.X;
-                        mainClient.playerState.YPos = vector2Message.Y;
+                        mainClient.playerState.ServerXPos = vector2Message.X;
+                        mainClient.playerState.ServerYPos = vector2Message.Y;
                         // Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
                         break;
 
@@ -70,7 +70,7 @@ namespace AgarioShared.Network
                         ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnSpawnOrb);
                     
                     
-                        Debug.Log($"Spawning orb at: {mainClient.OrbSpawner.X},{mainClient.OrbSpawner.Y}");
+                        // Debug.Log($"Spawning orb at: {mainClient.OrbSpawner.X},{mainClient.OrbSpawner.Y}");
                         break;
                 
                     default:

@@ -18,12 +18,12 @@ namespace Network
 
         private async Task UpdatePosToServer()
         {
-            var position = mainClient.playerState.transform.position;
+            var currentPlayerPosition = mainClient.playerState.GetPlayerCurrentPosition();
             var msg = new Vector2Message
             {
                 MessageName = MessagesEnum.Vector2Message,
-                X = position.x,
-                Y = position.y
+                X = currentPlayerPosition.X,
+                Y = currentPlayerPosition.Y
             };
 
             await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);

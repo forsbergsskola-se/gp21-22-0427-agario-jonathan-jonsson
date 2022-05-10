@@ -1,14 +1,23 @@
-using UnityEngine;
+using System.Numerics;
 
 namespace AgarioShared.Model
 {
- public class PlayerState : MonoBehaviour
- {
-  public string PlayerName;
-  public float Size;
-  public float PlayerSpeed;
-  public bool IllegalMovement;
-  public float XPos;
-  public float YPos;
- }
+    public class PlayerState
+    {
+        
+        //TODO: these values should be sent from server on game start. also only need getters then I think? Cheat possibilities here otherwise?
+        public float CurrentXPos;
+        public float CurrentYPos;
+        public bool IllegalMovement;
+        public string PlayerName;
+        public float PlayerSpeed = 3000;
+        public float ServerXPos;
+        public float ServerYPos;
+        public float Size = 1;
+
+        public Vector2 GetPlayerCurrentPosition()
+        {
+            return new Vector2(CurrentXPos, CurrentYPos);
+        }
+    }
 }

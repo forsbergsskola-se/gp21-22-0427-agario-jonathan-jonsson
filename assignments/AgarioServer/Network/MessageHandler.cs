@@ -46,7 +46,9 @@ public class MessageHandler
 
                 case MessagesEnum.Vector2Message:
                     var playerPositionMessage = JsonSerializer.Deserialize<Vector2Message>(inputJson, options);
+                    
                     playerClient.PlayerState.IllegalMovement= MovementLegality.EvaluateMovement(playerPositionMessage, playerClient);
+                    
                     playerClient.PlayerState.XPos = Math.Clamp(playerPositionMessage.X, -GameState.BoardSizeX/2, GameState.BoardSizeX/2);
                     playerClient.PlayerState.YPos = Math.Clamp(playerPositionMessage.Y, -GameState.BoardSizeY/2, GameState.BoardSizeY/2);
                     // Console.WriteLine($"{playerClient.PlayerState.PlayerName} position: X={playerClient.PlayerState.XPos},Y={playerClient.PlayerState.YPos}");

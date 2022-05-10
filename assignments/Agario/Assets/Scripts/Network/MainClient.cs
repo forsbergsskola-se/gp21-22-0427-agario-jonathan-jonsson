@@ -53,6 +53,7 @@ namespace Network
 
         private async Task Init()
         {
+            playerState = new PlayerState();
             var startGameData = FindObjectOfType<StartConnectionData>(); //TODO: the whole transfer data via object that does not destroy on scenechange feels ugly. Fix - maybe SO?
             playerState.PlayerName = startGameData.playerName;
             playerTcpClient = startGameData.TcpClient;
