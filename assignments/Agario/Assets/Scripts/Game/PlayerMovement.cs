@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.AgarioShared.Model;
 using Network;
 using UnityEngine;
@@ -11,6 +12,12 @@ namespace Game
 
         private float horizontal;
         private float vertical;
+
+        private void Start()
+        {
+            Debug.LogError("To get console in build");
+        }
+
         private void Update()
         {
             horizontal = Input.GetAxisRaw("Horizontal");
