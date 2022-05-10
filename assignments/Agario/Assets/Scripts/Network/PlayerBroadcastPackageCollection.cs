@@ -26,7 +26,7 @@ namespace Network
                 X = currentPlayerPosition.X,
                 Y = currentPlayerPosition.Y
             };
-            Debug.Log(msg.X + " " +msg.Y);
+            // Debug.Log(msg.X + " " +msg.Y);
             await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
         }
     }

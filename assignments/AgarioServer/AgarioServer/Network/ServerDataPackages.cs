@@ -24,7 +24,7 @@ public class ServerDataPackages
         {
             MessageName = MessagesEnum.Vector2Message,
             X = playerClient.PlayerState.ServerXPos,
-            Y = playerClient.PlayerState.ServerXPos
+            Y = playerClient.PlayerState.ServerYPos
         };
 
         await MessageHandler.SendMessageAsync(illegalMovementMessage, playerClient.StreamWriter);

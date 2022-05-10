@@ -50,7 +50,7 @@ namespace AgarioShared.Network
                         var vector2Message = JsonUtility.FromJson<Vector2Message>(inputJson);
                         mainClient.playerState.ServerXPos = vector2Message.X;
                         mainClient.playerState.ServerYPos = vector2Message.Y;
-                        // Debug.Log($"vector2message: X={Vector2Message.x},Y={Vector2Message.y}");
+                        // Debug.Log($"vector2message: X={vector2Message.X},Y={vector2Message.Y}");
                         break;
 
                     case MessagesEnum.BoolMessage:
