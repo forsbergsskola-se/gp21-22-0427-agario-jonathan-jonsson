@@ -1,4 +1,4 @@
-﻿namespace AgarioServer;
+﻿namespace AgarioServer.Model;
 
 public class GameState
 {

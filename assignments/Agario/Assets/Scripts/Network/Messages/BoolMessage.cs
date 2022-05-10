@@ -1,5 +1,0 @@
-
-public class BoolMessage : Message
-{
-    public bool BoolValue; 
-}

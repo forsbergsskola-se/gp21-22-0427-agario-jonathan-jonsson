@@ -1,6 +1,9 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using AgarioServer;
+using AgarioServer.Messages;
+using AgarioServer.Model;
+
+namespace AgarioServer.Network;
 
 public class MainServer //TODO: name??? atm only entry point for player connection and starting player init
 {

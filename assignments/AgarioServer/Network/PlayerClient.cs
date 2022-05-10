@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
+using AgarioServer.Model;
 
-namespace AgarioServer;
+namespace AgarioServer.Network;
 
 public class PlayerClient
 {

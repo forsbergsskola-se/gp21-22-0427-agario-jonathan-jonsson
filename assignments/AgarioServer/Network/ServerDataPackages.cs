@@ -1,4 +1,6 @@
-﻿namespace AgarioServer;
+﻿using AgarioServer.Messages;
+
+namespace AgarioServer.Network;
 
 public class ServerDataPackages
 {

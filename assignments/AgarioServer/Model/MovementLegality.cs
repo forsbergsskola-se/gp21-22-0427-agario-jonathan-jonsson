@@ -1,4 +1,7 @@
-﻿namespace AgarioServer;
+﻿using AgarioServer.Messages;
+using AgarioServer.Network;
+
+namespace AgarioServer.Model;
 
 public class MovementLegality
 {

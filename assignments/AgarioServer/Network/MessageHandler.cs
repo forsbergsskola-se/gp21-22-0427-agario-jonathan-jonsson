@@ -1,7 +1,8 @@
-﻿using System.Net.Sockets;
-using System.Text.Json;
+﻿using System.Text.Json;
+using AgarioServer.Messages;
+using AgarioServer.Model;
 
-namespace AgarioServer;
+namespace AgarioServer.Network;
 
 public class MessageHandler
 {

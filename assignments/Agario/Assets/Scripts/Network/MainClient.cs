@@ -1,76 +1,82 @@
-using System;
 using System.Collections;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using AgarioShared.Model;
+using AgarioShared.Network;
+using AgarioShared.Network.Messages;
+using Game;
 using UnityEngine;
 
-public class MainClient : MonoBehaviour
+namespace Network
 {
-    public PlayerState playerState;
-    public OrbSpawner OrbSpawner;
-    [SerializeField] private PlayerBroadcastPackageCollection playerBroadcastData;
-    public int ServerID;
-    public MessageHandler MessageHandler;
-    private TcpClient playerTcpClient = new();
-    public StreamWriter StreamWriter;
-    public float UpdateLoopTime;
-
-    private void Start()
+    public class MainClient : MonoBehaviour
     {
-        SpawnPlayer();
-        PlayerSetup();
-        StartCoroutine(UpdateLoop(UpdateLoopTime));
+        public PlayerState playerState;
+        public OrbSpawner OrbSpawner;
+        [SerializeField] private PlayerBroadcastPackageCollection playerBroadcastData;
+        public int ServerID;
+        public MessageHandler MessageHandler;
+        private TcpClient playerTcpClient = new();
+        public StreamWriter StreamWriter;
+        public float UpdateLoopTime;
 
-    }
+        private void Start()
+        {
+            SpawnPlayer();
+            PlayerSetup();
+            StartCoroutine(UpdateLoop(UpdateLoopTime));
 
-    private void SpawnPlayer()
-    {
-        //Implement new message getting start coords and instantiate player here
-    }
+        }
 
-    private async Task PlayerSetup()
-    {
-        await Init();
-    }
+        private void SpawnPlayer()
+        {
+            //Implement new message getting start coords and instantiate player here
+        }
+
+        private async Task PlayerSetup()
+        {
+            await Init();
+        }
 
  
 
-    IEnumerator UpdateLoop(float updateLoopTime)
-    {
-        while (true)
+        IEnumerator UpdateLoop(float updateLoopTime)
         {
-            //Update broadcasts
-            playerBroadcastData.PlayerBroadCastPackage();
-            yield return new WaitForSeconds(updateLoopTime);
+            while (true)
+            {
+                //Update broadcasts
+                playerBroadcastData.PlayerBroadCastPackage();
+                yield return new WaitForSeconds(updateLoopTime);
+            }
         }
-    }
 
-    private async Task Init()
-    {
-        var startGameData = FindObjectOfType<StartConnectionData>(); //TODO: the whole transfer data via object that does not destroy on scenechange feels ugly. Fix - maybe SO?
-        playerState.PlayerName = startGameData.playerName;
-        playerTcpClient = startGameData.TcpClient;
-        StreamWriter = new StreamWriter(playerTcpClient.GetStream());
-        new Task(() => MessageHandler.ReadMessage(playerTcpClient)).Start();
-        await SendClientLogInMessage();
-    }
-
-
-    private async Task SendClientLogInMessage()
-    {
-        var logInMessage = new LogInMessage
+        private async Task Init()
         {
-            MessageName = MessagesEnum.LogInMessage,
-            PlayerName = playerState.PlayerName
-        };
-        
-        await MessageHandler.SendMessageAsync(logInMessage, StreamWriter);
-    }
+            var startGameData = FindObjectOfType<StartConnectionData>(); //TODO: the whole transfer data via object that does not destroy on scenechange feels ugly. Fix - maybe SO?
+            playerState.PlayerName = startGameData.playerName;
+            playerTcpClient = startGameData.TcpClient;
+            StreamWriter = new StreamWriter(playerTcpClient.GetStream());
+            new Task(() => MessageHandler.ReadMessage(playerTcpClient)).Start();
+            await SendClientLogInMessage();
+        }
 
-    private void OnApplicationQuit()
-    {
-        playerTcpClient.Close();
+
+        private async Task SendClientLogInMessage()
+        {
+            var logInMessage = new LogInMessage
+            {
+                MessageName = MessagesEnum.LogInMessage,
+                PlayerName = playerState.PlayerName
+            };
         
+            await MessageHandler.SendMessageAsync(logInMessage, StreamWriter);
+        }
+
+        private void OnApplicationQuit()
+        {
+            playerTcpClient.Close();
+        
+        }
     }
 }

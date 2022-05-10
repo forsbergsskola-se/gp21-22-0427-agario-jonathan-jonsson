@@ -5,22 +5,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartConnectionData : MonoBehaviour //TODO: The whole move an object as data holder between main menu and main scene feels ugly, since it is never used again... fix!
+namespace Network
 {
-    public TMP_InputField nameInput;
-    public TcpClient TcpClient = new TcpClient();
-    public string playerName;
-    public void ConnectOnClick() => Connect();
-
-    private async Task Connect()
+    public class StartConnectionData : MonoBehaviour //TODO: The whole move an object as data holder between main menu and main scene feels ugly, since it is never used again... fix!
     {
-        await TcpClient.ConnectAsync(IPAddress.Loopback, 1313);
-        playerName = nameInput.text;
-        SceneManager.LoadSceneAsync("AgarioMain");
-    }
+        public TMP_InputField nameInput;
+        public TcpClient TcpClient = new TcpClient();
+        public string playerName;
+        public void ConnectOnClick() => Connect();
 
-    private void Start()
-    {
-        DontDestroyOnLoad(this);
+        private async Task Connect()
+        {
+            await TcpClient.ConnectAsync(IPAddress.Loopback, 1313);
+            playerName = nameInput.text;
+            SceneManager.LoadSceneAsync("AgarioMain");
+        }
+
+        private void Start()
+        {
+            DontDestroyOnLoad(this);
+        }
     }
 }

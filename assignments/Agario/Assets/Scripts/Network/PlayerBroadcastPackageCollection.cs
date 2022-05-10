@@ -1,27 +1,32 @@
 using System.Threading.Tasks;
+using AgarioShared.Network;
+using AgarioShared.Network.Messages;
 using UnityEngine;
 
-public class PlayerBroadcastPackageCollection : MonoBehaviour
+namespace Network
 {
-    [SerializeField] private MainClient mainClient;
-
-
-    public async Task PlayerBroadCastPackage()
+    public class PlayerBroadcastPackageCollection : MonoBehaviour
     {
-        await UpdatePosToServer();
-    }
+        [SerializeField] private MainClient mainClient;
 
 
-    private async Task UpdatePosToServer()
-    {
-        var position = mainClient.playerState.transform.position;
-        var msg = new Vector2Message
+        public async Task PlayerBroadCastPackage()
         {
-            MessageName = MessagesEnum.Vector2Message,
-            X = position.x,
-            Y = position.y
-        };
+            await UpdatePosToServer();
+        }
 
-        await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
+
+        private async Task UpdatePosToServer()
+        {
+            var position = mainClient.playerState.transform.position;
+            var msg = new Vector2Message
+            {
+                MessageName = MessagesEnum.Vector2Message,
+                X = position.x,
+                Y = position.y
+            };
+
+            await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
+        }
     }
 }

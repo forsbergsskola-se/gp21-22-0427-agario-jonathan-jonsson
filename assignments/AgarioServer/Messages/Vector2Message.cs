@@ -1,4 +1,6 @@
-﻿namespace AgarioServer;
+﻿using AgarioServer.Network;
+
+namespace AgarioServer.Messages;
 
 public class Vector2Message : Message
 {

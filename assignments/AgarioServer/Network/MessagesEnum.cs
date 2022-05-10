@@ -1,4 +1,4 @@
-﻿namespace AgarioServer;
+﻿namespace AgarioServer.Network;
 
 public enum MessagesEnum
 {
