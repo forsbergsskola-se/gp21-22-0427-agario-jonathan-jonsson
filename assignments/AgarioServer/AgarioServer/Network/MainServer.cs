@@ -30,11 +30,11 @@ public class MainServer
  
     private static async Task SetUpPlayerClient(TcpClient tcpClient)
     {
-        playerClient = new PlayerClient(tcpClient,++id);
+        playerClient = new PlayerClient(tcpClient,id++);
 
         connectedPlayerClients.Add(id,playerClient);
 
-        await SendWelcomeResponseandID(playerClient);
+        await SendWelcomeResponseAndID(playerClient);
         Console.WriteLine("Send welcome response and ID - Done");
         new Task(() => OrbTicker(playerClient)).Start();
         new Task(() => ContinuousBroadCaster(playerClient)).Start();
@@ -60,7 +60,7 @@ public class MainServer
     }
 
 
-    private static async Task SendWelcomeResponseandID(PlayerClient playerClient)
+    private static async Task SendWelcomeResponseAndID(PlayerClient playerClient)
     {
         var newStringMessage = new StringMessage
         {

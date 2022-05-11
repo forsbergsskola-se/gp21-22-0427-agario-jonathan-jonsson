@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.AgarioShared.Network;
+﻿using AgarioServer.Model;
+using Assets.Scripts.AgarioShared.Network;
 using Assets.Scripts.AgarioShared.Network.Messages;
 
 namespace AgarioServer.Network;
@@ -9,7 +10,9 @@ public class ServerDataPackages
     public static async Task SendServerDataPackages(PlayerClient playerClient)
     {
         
-        await SendIllegalPositionNotification(playerClient);
+         SendIllegalPositionNotification(playerClient);
+         SendOrbPositionsToClients(playerClient);
+        
     }
 
     private static async Task SendIllegalPositionNotification(PlayerClient playerClient)
@@ -29,6 +32,17 @@ public class ServerDataPackages
 
         await MessageHandler.SendMessageAsync(illegalMovementMessage, playerClient.StreamWriter);
         await MessageHandler.SendMessageAsync(positionCorrection, playerClient.StreamWriter);
+    }
+
+    public static async Task SendOrbPositionsToClients(PlayerClient playerClient)
+    {
+        Console.WriteLine("");
+        foreach (var orbCoordinate in OrbSpawner.orbCoordinates)
+        {
+            Console.WriteLine("OrbCoordinates:"+orbCoordinate.X +" " +orbCoordinate.Y);
+        }
+        
+ 
     }
     
 }

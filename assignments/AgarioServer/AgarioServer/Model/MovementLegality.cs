@@ -1,4 +1,5 @@
 ﻿using AgarioServer.Network;
+using Assets.Scripts.AgarioShared.Model;
 using Assets.Scripts.AgarioShared.Network.Messages;
 
 namespace AgarioServer.Model;

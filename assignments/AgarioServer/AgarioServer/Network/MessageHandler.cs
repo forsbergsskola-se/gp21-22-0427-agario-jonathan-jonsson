@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using AgarioServer.Model;
+using Assets.Scripts.AgarioShared.Model;
 using Assets.Scripts.AgarioShared.Network;
 using Assets.Scripts.AgarioShared.Network.Messages;
 

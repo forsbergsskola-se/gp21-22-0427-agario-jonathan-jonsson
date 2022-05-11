@@ -1,4 +1,5 @@
 ﻿using AgarioServer.Network;
+using Assets.Scripts.AgarioShared.Model;
 using Assets.Scripts.AgarioShared.Network;
 using Assets.Scripts.AgarioShared.Network.Messages;
 
@@ -6,6 +7,7 @@ namespace AgarioServer.Model;
 
 public class OrbSpawner
 {
+    public static  List<SpawnOrbMessage> orbCoordinates = new List<SpawnOrbMessage>();
     public static async Task SpawnOrb(PlayerClient playerClient)
     {
         Random random = new Random();
@@ -16,7 +18,8 @@ public class OrbSpawner
             Y = random.Next(-GameState.BoardSizeY / 2, GameState.BoardSizeY / 2)
         };
         Console.WriteLine($"Spawning orb at {msg.X},{msg.Y}");
-
+        orbCoordinates.Add(msg);
+        Console.WriteLine($"orbCoords count: {orbCoordinates.Count}");
         await MessageHandler.SendMessageAsync(msg, playerClient.StreamWriter);
     } 
 }
