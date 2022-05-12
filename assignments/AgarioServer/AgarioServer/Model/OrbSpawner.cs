@@ -20,7 +20,6 @@ public class OrbSpawner
         
         Console.WriteLine($"Spawning orb at {msg.X},{msg.Y}");
         orbCoordinates.Add(msg);
-        Console.WriteLine($"orbCoords count: {orbCoordinates.Count}");
         await MessageHandler.SendMessageAsync(msg, playerClient.StreamWriter);
     } 
 }

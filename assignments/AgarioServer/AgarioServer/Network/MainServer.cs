@@ -36,11 +36,13 @@ public class MainServer
 
         await SendWelcomeResponseAndID(playerClient);
         Console.WriteLine("Send welcome response and ID - Done");
+        
         new Task(() => OrbTicker(playerClient)).Start();
         new Task(() => ContinuousBroadCaster(playerClient)).Start();
     }
 
-    private static async Task OrbTicker(PlayerClient playerClient)
+    private static async Task OrbTicker(PlayerClient playerClient) // should not scale with connected players. Where should I send the message?
+                                                                   // More of a Game client than a playerClient i think? Also, if playerClient that is set to the OrbTicker, it collapses?
     {
         while (true)
         {
@@ -50,7 +52,7 @@ public class MainServer
     }
     
     
-    private static async Task ContinuousBroadCaster(PlayerClient playerClient)
+    private static async Task ContinuousBroadCaster(PlayerClient playerClient) // Send to all players.
     {
         while (true)
         {

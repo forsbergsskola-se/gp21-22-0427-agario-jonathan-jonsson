@@ -42,7 +42,7 @@ namespace Network
 
  
 
-        IEnumerator UpdateLoop(float updateLoopTime)
+        IEnumerator UpdateLoop(float updateLoopTime) // send to server
         {
             while (true)
             {
@@ -52,7 +52,7 @@ namespace Network
             }
         }
 
-        private async Task Init()
+        private async Task Init() // Stuff here move to playerstate or another new script? playerstate is kind of wrong since it is shared?
         {
             playerState = new PlayerState();
             var startGameData = FindObjectOfType<StartConnectionData>(); //TODO: the whole transfer data via object that does not destroy on scenechange feels ugly. Fix - maybe SO?

@@ -11,7 +11,6 @@ public class ServerDataPackages
     {
         
          SendIllegalPositionNotification(playerClient);
-         SendOrbPositionsToClients(playerClient);
         
     }
 
@@ -34,15 +33,6 @@ public class ServerDataPackages
         await MessageHandler.SendMessageAsync(positionCorrection, playerClient.StreamWriter);
     }
 
-    public static async Task SendOrbPositionsToClients(PlayerClient playerClient)
-    {
-        Console.WriteLine("");
-        foreach (var orbCoordinate in OrbSpawner.orbCoordinates)
-        {
-            Console.WriteLine("OrbCoordinates:"+orbCoordinate.X +" " +orbCoordinate.Y);
-        }
-        
- 
-    }
+  
     
 }

@@ -13,11 +13,7 @@ namespace Game
         private float horizontal;
         private float vertical;
 
-        private void Start()
-        {
-            Debug.LogError("To get console in build");
-        }
-
+       
         private void Update()
         {
             horizontal = Input.GetAxisRaw("Horizontal");
