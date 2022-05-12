@@ -8,6 +8,7 @@ namespace Assets.Scripts.AgarioShared.Network
         ServerIdAssignmentMessage,
         SpawnOrbMessage,
         StringMessage,
+        ValidateOrbPositionMessage,
         Vector2Message
     }
 }

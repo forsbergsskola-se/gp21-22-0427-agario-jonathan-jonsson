@@ -10,7 +10,6 @@ namespace Game
         public float X;
         public float Y;
 
-
         [SerializeField] private MessageHandler msgHandler;
     
         private void OnEnable()

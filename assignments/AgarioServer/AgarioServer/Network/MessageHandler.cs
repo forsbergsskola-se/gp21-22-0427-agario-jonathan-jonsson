@@ -15,9 +15,13 @@ public class MessageHandler
     
     public static async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
     {
-        await streamWriter.WriteLineAsync(JsonSerializer.Serialize(message, options));
-        await streamWriter.FlushAsync();
- 
+        lock (streamWriter)
+        {
+         
+            streamWriter.WriteLineAsync(JsonSerializer.Serialize(message, options));
+            streamWriter.FlushAsync();
+
+        }
     }
     
     public static async Task ReadMessage(PlayerClient playerClient)
@@ -27,7 +31,6 @@ public class MessageHandler
         while (true)
         {
             var inputJson = await streamReader.ReadLineAsync();
-           
             var message = JsonSerializer.Deserialize<Assets.Scripts.AgarioShared.Network.Message>(inputJson, options);
             
             switch (message.MessageName)
@@ -56,8 +59,19 @@ public class MessageHandler
                     break;
 
                 case MessagesEnum.BoolMessage:
+                    var boolmsg = JsonSerializer.Deserialize<BoolMessage>(inputJson, options);
+                    Console.WriteLine(boolmsg.MessageName);
+                    Console.WriteLine(boolmsg.BoolValue);
                     break;
                 case MessagesEnum.SpawnOrbMessage:
+                    break;
+                case MessagesEnum.OrbPositionsMessage:
+                    break;
+                case MessagesEnum.ValidateOrbPositionMessage:
+                    var orbValidationMessage =
+                        JsonSerializer.Deserialize<ValidateOrbPositionMessage>(inputJson, options);
+                    Console.WriteLine($"Questioned position: {orbValidationMessage.X}, {orbValidationMessage.Y}");
+                    Console.WriteLine($"Is it in list?: {OrbSpawner.orbCoordinates.Contains(new SpawnOrbMessage(){X=orbValidationMessage.X,Y=orbValidationMessage.Y})}");
                     break;
                 default:
                     throw new Exception("ERROR: Specific message not found on server!");

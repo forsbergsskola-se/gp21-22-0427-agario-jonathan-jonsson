@@ -20,10 +20,15 @@ namespace AgarioShared.Network
 
         public static async Task SendMessageAsync<T>(T message, StreamWriter streamWriter)
         {
-            await streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
-            await streamWriter.FlushAsync();
+            lock (streamWriter)
+            {
+                 streamWriter.WriteLineAsync(JsonUtility.ToJson(message));
+                 streamWriter.FlushAsync();    
+            }
+            
         }    
     
+        //TODO: Reflection here
         public async Task ReadMessage(TcpClient client)
         {
             var streamReader = new StreamReader(client.GetStream());
@@ -67,7 +72,11 @@ namespace AgarioShared.Network
                     
                         // Debug.Log($"Spawning orb at: {mainClient.OrbSpawner.X},{mainClient.OrbSpawner.Y}");
                         break;
-                
+
+                    case MessagesEnum.OrbPositionsMessage:
+                        break;
+                    case MessagesEnum.ValidateOrbPositionMessage:
+                        break;
                     default:
                         throw new Exception("ERROR: Message class not found when reading data from server!");
                 }
