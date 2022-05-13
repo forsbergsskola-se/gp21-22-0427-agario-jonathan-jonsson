@@ -1,12 +1,15 @@
 using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Threading.Tasks;
+using Assets.Scripts.AgarioShared.Model;
 using Assets.Scripts.AgarioShared.Network;
 using Assets.Scripts.AgarioShared.Network.Messages;
 using Game;
 using Network;
 using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
 
 namespace AgarioShared.Network
 {
@@ -14,6 +17,7 @@ namespace AgarioShared.Network
     {
 
         public Action OnSpawnOrb;
+        public Action OnDeSpawnOrb;
     
         [SerializeField]
         private MainClient mainClient;
@@ -65,8 +69,8 @@ namespace AgarioShared.Network
                 
                     case MessagesEnum.SpawnOrbMessage:
                         var spawnOrbMessage = JsonUtility.FromJson<SpawnOrbMessage>(inputJson);
-                        mainClient.OrbSpawner.X = spawnOrbMessage.X;
-                        mainClient.OrbSpawner.Y = spawnOrbMessage.Y;
+                        mainClient.orbController.X = spawnOrbMessage.X;
+                        mainClient.orbController.Y = spawnOrbMessage.Y;
                     
                         ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnSpawnOrb);
                     
@@ -76,6 +80,12 @@ namespace AgarioShared.Network
                     case MessagesEnum.OrbPositionsMessage:
                         break;
                     case MessagesEnum.ValidateOrbPositionMessage:
+                        break;
+                    case MessagesEnum.OrbPositionValidationResponseMessage:
+                        var validationMsg = JsonUtility.FromJson<OrbPositionValidationResponseMessage>(inputJson);
+                        mainClient.orbController.XToCheck = validationMsg.X;
+                        mainClient.orbController.YToCheck = validationMsg.Y;
+                      ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnDeSpawnOrb);
                         break;
                     default:
                         throw new Exception("ERROR: Message class not found when reading data from server!");

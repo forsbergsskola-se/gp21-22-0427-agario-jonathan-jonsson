@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Numerics;
+using System.Text.Json;
 using AgarioServer.Model;
 using Assets.Scripts.AgarioShared.Model;
 using Assets.Scripts.AgarioShared.Network;
@@ -70,8 +71,9 @@ public class MessageHandler
                 case MessagesEnum.ValidateOrbPositionMessage:
                     var orbValidationMessage =
                         JsonSerializer.Deserialize<ValidateOrbPositionMessage>(inputJson, options);
-                    Console.WriteLine($"Questioned position: {orbValidationMessage.X}, {orbValidationMessage.Y}");
-                    Console.WriteLine($"Is it in list?: {OrbSpawner.orbCoordinates.Contains(new SpawnOrbMessage(){X=orbValidationMessage.X,Y=orbValidationMessage.Y})}");
+                    OrbSpawner.CheckAndSendValidationResponse(orbValidationMessage.X,orbValidationMessage.Y, playerClient); //TODO: Method calls in messagehandler.......... feeeeeeeels bad
+                    break;
+                case MessagesEnum.OrbPositionValidationResponseMessage:
                     break;
                 default:
                     throw new Exception("ERROR: Specific message not found on server!");

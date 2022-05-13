@@ -5,6 +5,7 @@ namespace Assets.Scripts.AgarioShared.Network
         BoolMessage,
         LogInMessage,
         OrbPositionsMessage,
+        OrbPositionValidationResponseMessage,
         ServerIdAssignmentMessage,
         SpawnOrbMessage,
         StringMessage,

@@ -14,7 +14,7 @@ namespace Network
     public class MainClient : MonoBehaviour
     {
         public PlayerState playerState;
-        public OrbSpawner OrbSpawner;
+        public OrbController orbController;
         [SerializeField] private PlayerBroadcastPackageCollection playerBroadcastData;
         public int ServerID;
         public MessageHandler MessageHandler;

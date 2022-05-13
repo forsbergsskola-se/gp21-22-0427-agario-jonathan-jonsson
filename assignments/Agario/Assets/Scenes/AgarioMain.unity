@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: playerState
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -4082339178986723726, guid: ec56d30e5c51b184685bcf19a29e14b9, type: 3}
+      propertyPath: orbController
+      value: 
+      objectReference: {fileID: 2106026805}
     - target: {fileID: 876463697, guid: ec56d30e5c51b184685bcf19a29e14b9, type: 3}
       propertyPath: orb
       value: 
@@ -214,6 +218,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 232771aa9b5d5c645b51904560271ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2106026805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5414266647232154336, guid: ec56d30e5c51b184685bcf19a29e14b9, type: 3}
+  m_PrefabInstance: {fileID: 2106026801}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57311ef442b326439cdefa0ead9c181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6389567100165445961
