@@ -4,12 +4,11 @@ namespace Assets.Scripts.AgarioShared.Network
     {
         BoolMessage,
         LogInMessage,
-        OrbPositionsMessage,
-        OrbPositionValidationResponseMessage,
+        OrbValidationResponseMessage,
         ServerIdAssignmentMessage,
         SpawnOrbMessage,
         StringMessage,
-        ValidateOrbPositionMessage,
-        Vector2Message
+        Vector2Message,
+        VerifyValidOrbPickupMessage
     }
 }

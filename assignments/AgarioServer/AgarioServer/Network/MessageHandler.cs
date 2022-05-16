@@ -64,17 +64,20 @@ public class MessageHandler
                     Console.WriteLine(boolmsg.MessageName);
                     Console.WriteLine(boolmsg.BoolValue);
                     break;
+                case MessagesEnum.VerifyValidOrbPickupMessage:
+                    var verificationQuestionMessage =
+                        JsonSerializer.Deserialize<VerifyValidOrbPickupMessage>(inputJson, options);
+                    
+                    // Console.WriteLine($"Server checking orb: #{verificationQuestionMessage.colOrbId} at position {verificationQuestionMessage.XCol},{verificationQuestionMessage.YCol}");
+                    // Console.WriteLine($"Dictionary position: {GameState.orbData[verificationQuestionMessage.colOrbId].X},{GameState.orbData[verificationQuestionMessage.colOrbId].Y}");
+                    
+                     OrbValidation.ValidateOrbPickup(verificationQuestionMessage.colOrbId,
+                        new Vector2(verificationQuestionMessage.XCol, verificationQuestionMessage.YCol), playerClient);
+                    
+                    break;
                 case MessagesEnum.SpawnOrbMessage:
                     break;
-                case MessagesEnum.OrbPositionsMessage:
-                    break;
-                case MessagesEnum.ValidateOrbPositionMessage:
-                    var orbValidationMessage =
-                        JsonSerializer.Deserialize<ValidateOrbPositionMessage>(inputJson, options);
-                    OrbSpawner.CheckAndSendValidationResponse(orbValidationMessage.X,orbValidationMessage.Y, playerClient); //TODO: Method calls in messagehandler.......... feeeeeeeels bad
-                    break;
-                case MessagesEnum.OrbPositionValidationResponseMessage:
-                    break;
+    
                 default:
                     throw new Exception("ERROR: Specific message not found on server!");
             }

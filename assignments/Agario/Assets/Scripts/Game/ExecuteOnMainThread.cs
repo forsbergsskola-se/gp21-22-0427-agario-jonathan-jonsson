@@ -26,6 +26,7 @@ namespace Game
         {
             actions.Enqueue(action);
         }
+        
 
         private void Update()
         {

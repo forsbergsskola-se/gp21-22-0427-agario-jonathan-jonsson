@@ -7,11 +7,10 @@ namespace Assets.Scripts.AgarioShared.Model
     {
         public static int BoardSizeX = 100;
         public static int BoardSizeY = 100;
-    
-        public static  List<Vector2> orbCoordinates = new List<Vector2>();
 
-    
-    
+        public static  Dictionary<int, Vector2> orbData = new Dictionary<int, Vector2>();
+
+
     } 
 }
 

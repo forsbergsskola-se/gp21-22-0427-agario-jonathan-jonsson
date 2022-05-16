@@ -17,22 +17,29 @@ public class OrbCollector : MonoBehaviour
         {
 
             //Send position to check to server
-            CheckOrbPositionValidity(col.transform.position);
+            var colOrbId = col.GetComponent<SpawnedOrbData>().orbId;
+            CheckOrbPositionValidity(colOrbId, transform.position);
             //Server sees if it is in list
             //If so, returns msg with OK and removes it from the current list.
    
         }
     }
 
-    public async Task CheckOrbPositionValidity(Vector2 orbPos)
+    public async Task CheckOrbPositionValidity(int colOrbId, Vector2 playerPos)
     {
-        var orbPositionMsg = new ValidateOrbPositionMessage()
+      
+        var msg = new VerifyValidOrbPickupMessage()
         {
-            MessageName = MessagesEnum.ValidateOrbPositionMessage,
-            X = orbPos.x,
-            Y = orbPos.y
+            MessageName = MessagesEnum.VerifyValidOrbPickupMessage,
+            colOrbId = colOrbId,
+            XCol = playerPos.x,
+            YCol = playerPos.y
         };
-        await MessageHandler.SendMessageAsync(orbPositionMsg, mainClient.StreamWriter);
+
+        Debug.Log($"Checking orb {msg.colOrbId} at pos: {msg.XCol},{msg.YCol}");
+
+        await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
+
     }
  
 }
