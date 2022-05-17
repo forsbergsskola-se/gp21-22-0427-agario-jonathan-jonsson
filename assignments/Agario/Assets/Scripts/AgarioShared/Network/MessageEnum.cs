@@ -3,6 +3,7 @@ namespace Assets.Scripts.AgarioShared.Network
     public enum MessagesEnum
     {
         BoolMessage,
+        DefaultPlayerStateDataMessage,
         LogInMessage,
         OrbValidationResponseMessage,
         ServerIdAssignmentMessage,

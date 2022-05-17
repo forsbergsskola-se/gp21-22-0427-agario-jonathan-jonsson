@@ -10,18 +10,13 @@ using UnityEngine;
 
 public class OrbCollector : MonoBehaviour
 {
-    [SerializeField] private MainClient mainClient;
+    private MainClient mainClient => FindObjectOfType<MainClient>();
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Orb"))
         {
-
-            //Send position to check to server
             var colOrbId = col.GetComponent<SpawnedOrbData>().orbId;
             CheckOrbPositionValidity(colOrbId, transform.position);
-            //Server sees if it is in list
-            //If so, returns msg with OK and removes it from the current list.
-   
         }
     }
 
@@ -36,7 +31,7 @@ public class OrbCollector : MonoBehaviour
             YCol = playerPos.y
         };
 
-        Debug.Log($"Checking orb {msg.colOrbId} at pos: {msg.XCol},{msg.YCol}");
+        // Debug.Log($"Checking orb {msg.colOrbId} at pos: {msg.XCol},{msg.YCol}");
 
         await MessageHandler.SendMessageAsync(msg, mainClient.StreamWriter);
 

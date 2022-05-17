@@ -7,6 +7,7 @@ using Assets.Scripts.AgarioShared.Model;
 using Assets.Scripts.AgarioShared.Network;
 using Assets.Scripts.AgarioShared.Network.Messages;
 using Game;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Network
@@ -21,26 +22,33 @@ namespace Network
         private TcpClient playerTcpClient = new();
         public StreamWriter StreamWriter;
         public float UpdateLoopTime;
+        public GameObject player;
+        
+        private void OnEnable()
+        {
+            MessageHandler.OnSpawnPlayer += SpawnPlayer;
+        }
 
+ 
+        
         private void Start()
         {
-            SpawnPlayer();
             PlayerSetup();
             StartCoroutine(UpdateLoop(UpdateLoopTime));
 
         }
 
-        private void SpawnPlayer()
+        public void SpawnPlayer()
         {
-            //Implement new message getting start coords and instantiate player here
+            Debug.Log(playerState.CurrentXPos);
+            Debug.Log(playerState.CurrentYPos);
+            Instantiate(player, new Vector2(playerState.CurrentXPos, playerState.CurrentYPos), Quaternion.identity);
         }
 
         private async Task PlayerSetup()
         {
             await Init();
         }
-
- 
 
         IEnumerator UpdateLoop(float updateLoopTime) // send to server
         {

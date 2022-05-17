@@ -18,6 +18,7 @@ namespace AgarioShared.Network
 
         public Action OnSpawnOrb;
         public Action OnDeSpawnOrb;
+        public Action OnSpawnPlayer;
     
         [SerializeField]
         private MainClient mainClient;
@@ -88,6 +89,16 @@ namespace AgarioShared.Network
                          }
                          
                          // Debug.Log($"Orb #{orbValidResponse.orbId}is valid?: {orbValidResponse.orbValid}");
+                         break;
+                     
+                     case MessagesEnum.DefaultPlayerStateDataMessage:
+                         var defaultDataMsg = JsonUtility.FromJson<DefaultPlayerStateDataMessage>(inputJson);
+                         mainClient.playerState.Score = defaultDataMsg.Score;
+                         mainClient.playerState.Size = defaultDataMsg.Size;
+                         mainClient.playerState.CurrentXPos = defaultDataMsg.startXPos;
+                         mainClient.playerState.CurrentYPos = defaultDataMsg.startYPos;
+                         mainClient.playerState.PlayerSpeed = defaultDataMsg.PlayerSpeed;
+                         ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnSpawnPlayer);
                          break;
                     default:
                         throw new Exception("ERROR: Message class not found when reading data from server!");

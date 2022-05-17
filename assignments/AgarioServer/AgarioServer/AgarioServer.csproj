@@ -11,8 +11,4 @@
     <ProjectReference Include="..\..\Agario\AgarioShared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Messages" />
-  </ItemGroup>
-
 </Project>

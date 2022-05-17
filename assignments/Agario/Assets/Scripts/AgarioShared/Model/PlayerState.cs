@@ -1,5 +1,9 @@
 using System;
+using System.Net.Http;
 using System.Numerics;
+using System.Threading.Tasks;
+using Assets.Scripts.AgarioShared.Network;
+using Assets.Scripts.AgarioShared.Network.Messages;
 
 namespace Assets.Scripts.AgarioShared.Model
 {
@@ -11,14 +15,17 @@ namespace Assets.Scripts.AgarioShared.Model
         public float CurrentYPos;
         public bool IllegalMovement;
         public string PlayerName;
-        public float PlayerSpeed = 3000;
+        public float PlayerSpeed;
         public float ServerXPos;
         public float ServerYPos;
-        public float Size = 1;
+        public float Size;
+        public int Score;
 
         public Vector2 GetPlayerCurrentPosition()
         {
             return new Vector2(CurrentXPos, CurrentYPos);
         }
+
+        
     }
 }

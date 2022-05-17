@@ -28,7 +28,7 @@ namespace Game
 
         }
 
-        public void SpawnOrb()
+        private void SpawnOrb()
         {
             var orbSpawn = Instantiate(orb, new Vector3(X, Y,0), Quaternion.identity);
            var orbSpawnId = orbSpawn.GetComponent<SpawnedOrbData>().orbId = spawnOrbId;
@@ -36,7 +36,7 @@ namespace Game
             // Debug.Log($"Adding orb {orbId} at {new Vector2(X,Y)}");
         }
 
-        public void DeSpawnOrb()
+        private void DeSpawnOrb()
         {
             var orbToDestroy = orbsOnfield[deSpawnOrbId];
             orbsOnfield.Remove(deSpawnOrbId);
