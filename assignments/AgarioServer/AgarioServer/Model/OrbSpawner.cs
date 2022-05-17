@@ -33,6 +33,4 @@ public class OrbSpawner
         GameState.orbData.Add(msg.orbId,new Vector2(msg.X,msg.Y));
         await MessageHandler.SendMessageAsync(msg, playerClient.StreamWriter);
     }
-
-   
 }

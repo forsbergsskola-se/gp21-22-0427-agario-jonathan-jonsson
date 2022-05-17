@@ -10,10 +10,11 @@ namespace Game
         [SerializeField] private GameObject orb;
         public float X;
         public float Y;
-        public int orbId;
+        public int spawnOrbId;
+        public int deSpawnOrbId;
 
         [SerializeField] private MessageHandler msgHandler;
-
+        private Dictionary<int, GameObject> orbsOnfield = new();
         private void OnEnable()
         {
             msgHandler.OnSpawnOrb += SpawnOrb;
@@ -23,19 +24,24 @@ namespace Game
         private void OnDisable()
         {
             msgHandler.OnSpawnOrb -= SpawnOrb;
+            msgHandler.OnDeSpawnOrb -= DeSpawnOrb;
+
         }
 
         public void SpawnOrb()
         {
             var orbSpawn = Instantiate(orb, new Vector3(X, Y,0), Quaternion.identity);
-            orbSpawn.GetComponent<SpawnedOrbData>().orbId = orbId;
+           var orbSpawnId = orbSpawn.GetComponent<SpawnedOrbData>().orbId = spawnOrbId;
+            orbsOnfield.Add(orbSpawnId,orbSpawn);
             // Debug.Log($"Adding orb {orbId} at {new Vector2(X,Y)}");
         }
 
         public void DeSpawnOrb()
         {
+            var orbToDestroy = orbsOnfield[deSpawnOrbId];
+            orbsOnfield.Remove(deSpawnOrbId);
+            Destroy(orbToDestroy);
 
-             
         }
 
     }

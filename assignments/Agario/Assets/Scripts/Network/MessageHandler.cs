@@ -71,7 +71,7 @@ namespace AgarioShared.Network
                         var spawnOrbMessage = JsonUtility.FromJson<SpawnOrbMessage>(inputJson);
                         mainClient.orbController.X = spawnOrbMessage.X;
                         mainClient.orbController.Y = spawnOrbMessage.Y;
-                        mainClient.orbController.orbId = spawnOrbMessage.orbId;
+                        mainClient.orbController.spawnOrbId = spawnOrbMessage.orbId;
                         
                         ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnSpawnOrb);
                     
@@ -80,7 +80,14 @@ namespace AgarioShared.Network
 
                      case MessagesEnum.OrbValidationResponseMessage:
                          var orbValidResponse = JsonUtility.FromJson<OrbValidationResponseMessage>(inputJson);
-                         Debug.Log($"Orb #{orbValidResponse.orbId}is valid?: {orbValidResponse.orbValid}");
+
+                         if (orbValidResponse.orbValid)
+                         {
+                             mainClient.orbController.deSpawnOrbId = orbValidResponse.orbId;
+                             ExecuteOnMainThread.Instance.ExecuteActionOnMainThread(OnDeSpawnOrb);
+                         }
+                         
+                         // Debug.Log($"Orb #{orbValidResponse.orbId}is valid?: {orbValidResponse.orbValid}");
                          break;
                     default:
                         throw new Exception("ERROR: Message class not found when reading data from server!");

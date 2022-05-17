@@ -27,5 +27,10 @@ public static class OrbValidation
        };
 
        await MessageHandler.SendMessageAsync(msg, playerClient.StreamWriter);
+       
+       if (msg.orbValid)
+       {
+           //Send score update here
+       }
     }
 }
