@@ -8,10 +8,10 @@ Implemented in Agario Game:
   * Server starts a new Task to listen to incoming messages. (OBS! happens once and is not relating to player connecting)
  
 * Client
-  * The player enters their name
-  * Connects to the server and passing TcpClient to server
+  * The player enters their name on start screen and connects.
+  * Connects to the server and passing TcpClient to server, sending name.
   * Starts a new Task to read incoming messages
-  * Receives default data from server and player is spawned into the world.
+  * Receives ID +  default data from server and player is spawned into the world, keeping name from initial screen.
 
 # During the game
 * Server
@@ -30,4 +30,5 @@ Implemented in Agario Game:
 * Refactor the whole thing. A lot to fix
   * Implementing reflection for the messaging system
   * Use a common message handler between server and client
+* Name is currently transfered inbetween scenes in unity by a GO. Should be sent with default package from server.
 * Implement missing game features (a lot)
