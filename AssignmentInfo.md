@@ -17,10 +17,14 @@ Implemented in Agario Game:
 * Server
   * Send a spawn orb message at predetermined interval to client, containing orbID and a random position on the game board.
   * Reads player position message and evaluates it so that it is not an illegal position (e.g. outside game board). If it is, the server sends a correction to the client.
+  * The player position evaluation and reporting back if player is in illegal position or not is done in server update loop.
+
+ 
+  
 
 * Client
   * Player move with WASD and have a camera following the player
-  * Broadcasts its position and sends it to the server
+  * Broadcasts its position and sends it to the server (Client update loop)
   * If the player exits the game board the client is being corrected by the server
   * Sends a message to the server when colliding with an orb for validation, based on orbID  and the players position. The distance between player and orb (taking radius of player into account) is evaluated and checked to be below a tolerance. If it is, the client receives confirmation and the orb is eaten.
   * Spawns orb after receiving instructions from server to do so
@@ -30,5 +34,6 @@ Implemented in Agario Game:
 * Refactor the whole thing. A lot to fix
   * Implementing reflection for the messaging system
   * Use a common message handler between server and client
+* Use the player movement evaluation to implement the visual update for seeing other players, since we already send position data already.
 * Name is currently transfered inbetween scenes in unity by a GO. Should be sent with default package from server.
 * Implement missing game features (a lot)
