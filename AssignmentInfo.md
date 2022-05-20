@@ -5,7 +5,7 @@ Implemented in Agario Game:
   * Listening and accepting Connections from player clients
   * When a player connects, it sends a server-unique ID to the player client and welcome message
   * Server sends default data (Speed, score, size and a random start position)
-  * Server starts a new Task to listen to incoming messages.
+  * Server starts a new Task to listen to incoming messages. (OBS! happens once and is not relating to player connecting)
  
 * Client
   * The player enters their name
