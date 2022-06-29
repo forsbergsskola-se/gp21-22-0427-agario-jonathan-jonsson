@@ -1,0 +1,36 @@
+
+    private static void UpdatePlayerVisual()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void IncreaseScore()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void SpawnOrb()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void ReceivePlayerScore()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void ReceivePlayerVisual()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static void ReceivePosition()
+    {
+ 
+    }
+
+    private static void Disconnect()
+    {
+        throw new NotImplementedException();
+        // tcpClient.Dispose();
+    }
